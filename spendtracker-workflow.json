@@ -12,7 +12,7 @@
       "type": "n8n-nodes-base.emailReadImap",
       "typeVersion": 2.1,
       "position": [
-        -1392,
+        -1456,
         176
       ],
       "id": "0aba0127-5258-4dbc-bb2d-6775ff139005",
@@ -160,7 +160,6 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "manual_override": false,
             "merchant_normalized": "={{ $('Merge').item.json.normalize_merchant }}",
             "merchant_original": "={{ $('Merge').item.json.merchant }}",
             "mcc_code": "={{ $json.MCC }}",
@@ -233,7 +232,8 @@
               "defaultMatch": false,
               "display": true,
               "type": "boolean",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": true
             },
             {
               "id": "created_at",
@@ -355,7 +355,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\n// const crypto = require('crypto');\nfor (const item of $('CreateTransactionEntry').all()) {\n  item.json.currency = \"MYR\"\n  item.json.base_currency = \"SGD\"\n  if (item.json.currency == \"SGD\") {\n    item.json.amount_base_currency = item.json.amount\n  } else {\n    item.json.amount_base_currency = item.json.amount / $(\"GetConversionRates\").first().json.sgd[item.json.currency.toLowerCase()]\n    item.json.amount_base_currency = Math.round(item.json.amount_base_currency * 100) / 100\n  }\n  \n  const raw = [\n    item.json.bank,\n    item.json.identifier,\n    item.json.merchant,\n    item.json.amount,\n    item.json.time\n  ].join(\"|\");\n\n\n  item.json.transaction_hash = raw;\n}\n\nreturn $('CreateTransactionEntry').all();"
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\n// const crypto = require('crypto');\nfor (const item of $('CreateTransactionEntry').all()) {\n  if (item.json.currency == \"SGD\") {\n    item.json.amount_base_currency = item.json.amount\n  } else {\n    item.json.amount_base_currency = item.json.amount / $(\"GetConversionRates\").first().json.sgd[item.json.currency.toLowerCase()]\n    item.json.amount_base_currency = Math.round(item.json.amount_base_currency * 100) / 100\n  }\n  \n  \n  const raw = [\n    item.json.bank,\n    item.json.identifier,\n    item.json.merchant,\n    item.json.amount,\n    item.json.time\n  ].join(\"|\");\n\n\n  item.json.transaction_hash = raw;\n}\n\nreturn $('CreateTransactionEntry').all();"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -392,7 +392,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "INSERT INTO transactions (\n    account_id,\n    merchant,\n    amount,\n    currency,\n    amount_base_currency,\n    base_currency,\n    category,\n    mcc_code,\n    transaction_timestamp,\n    transaction_hash\n)\nVALUES (\n    {{ $json.id }},\n    '{{ $('ConvertCurrencyIfNeeded').item.json.merchant }}',\n    {{ $('ConvertCurrencyIfNeeded').item.json.amount }},\n    '{{ $('ConvertCurrencyIfNeeded').item.json.currency }}',\n    {{ $('ConvertCurrencyIfNeeded').item.json.amount_base_currency }},\n    '{{ $('ConvertCurrencyIfNeeded').item.json.base_currency }}',\n    '{{ $('ConvertCurrencyIfNeeded').item.json.Category }}',\n    '{{ $('ConvertCurrencyIfNeeded').item.json.MCC }}',\n    '{{ $('ConvertCurrencyIfNeeded').item.json.time }}',\n    '{{ $('ConvertCurrencyIfNeeded').item.json.transaction_hash }}'\n)ON CONFLICT (transaction_hash) DO NOTHING;",
+        "query": "INSERT INTO transactions (\n    account_id,\n    merchant,\n    amount,\n    currency,\n    amount_base_currency,\n    category,\n    mcc_code,\n    transaction_timestamp,\n    transaction_hash\n)\nVALUES (\n    {{ $json.id }},\n    '{{ $('ConvertCurrencyIfNeeded').item.json.merchant }}',\n    {{ $('ConvertCurrencyIfNeeded').item.json.amount }},\n    '{{ $('ConvertCurrencyIfNeeded').item.json.currency }}',\n    {{ $('ConvertCurrencyIfNeeded').item.json.amount_base_currency }},\n    '{{ $('ConvertCurrencyIfNeeded').item.json.Category }}',\n    '{{ $('ConvertCurrencyIfNeeded').item.json.MCC }}',\n    '{{ $('ConvertCurrencyIfNeeded').item.json.time }}',\n    '{{ $('ConvertCurrencyIfNeeded').item.json.transaction_hash }}'\n)ON CONFLICT (transaction_hash) DO NOTHING;",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -464,7 +464,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        -352,
+        -368,
         208
       ],
       "id": "cd2890a6-7bab-49a1-a34b-0aafc538ea0c",
@@ -472,7 +472,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\n\nlet result = []\nfor (const item of $input.all()) {\n\n    ExtractDBS(item)\n\n}\n\nfunction ExtractDBS(item) {\n    \n  let merchant = item.json.merchant\n  const amountMatch = item.json.amount.match(/([A-Z]{3})*([\\d,]+\\.\\d{2})/);\n  let currency = null\n  let amount = null\n   if (amountMatch) {\n      currency = amountMatch[1];\n      amount = parseFloat(amountMatch[2].replace(/,/g, \"\"));\n    }\n  // Get current year\n  const year = new Date().getFullYear();\n  \n  // Remove the timezone abbreviation, append year, and add SGT offset (+08:00)\n  const cleanStr = $input.item.json.time.replace(/\\(SGT\\)/, '').trim() + ` ${year} +08:00`;\n  \n  // Convert to Date and ISO string\n  const transactionISO = new Date(cleanStr).toISOString();\n  \n\n\n  result.push( {\n    bank: \"DBS\",\n    merchant,\n    currency,\n    amount,\n    time: transactionISO,\n    identifier: $input.item.json.identifier,\n    normalize_merchant: normalizeMerchant(merchant)\n  });\n\n}\n\nfunction normalizeMerchant(name) {\n  return name\n    .toUpperCase()\n    .replace(/[^A-Z0-9]/g, \"\")\n    .trim();\n}\n\nreturn result"
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\n\nlet result = []\nfor (const item of $input.all()) {\n\n    ExtractDBS(item)\n\n}\n\nfunction ExtractDBS(item) {\n    \n  let merchant = item.json.merchant\n  const amountMatch = item.json.amount.match(/([A-Z]{3})*([\\d,]+\\.\\d{2})/);\n  let currency = null\n  let amount = null\n   if (amountMatch) {\n      currency = amountMatch[1];\n      amount = parseFloat(amountMatch[2].replace(/,/g, \"\"));\n    }\n  // Get current year\n  const year = new Date().getFullYear();\n  \n  // Remove the timezone abbreviation, append year, and add SGT offset (+08:00)\n  const cleanStr = $input.item.json.time.replace(/\\(SGT\\)/, '').trim() + ` ${year} +08:00`;\n  \n  // Convert to Date and ISO string\n  const transactionISO = new Date(cleanStr).toISOString();\n  \n\n\n  result.push( {\n    bank: \"DBS\",\n    merchant,\n    currency,\n    amount,\n    time: transactionISO,\n    identifier: item.json.identifier,\n    normalize_merchant: normalizeMerchant(merchant)\n  });\n\n}\n\nfunction normalizeMerchant(name) {\n  return name\n    .toUpperCase()\n    .replace(/[^A-Z0-9]/g, \"\")\n    .trim();\n}\n\nreturn result"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -883,13 +883,13 @@
       ]
     }
   },
-  "active": false,
+  "active": true,
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "1ea73db0-d5be-40ba-9462-423786e2a05e",
+  "versionId": "61be2228-5710-4dba-aee4-549f83b624ee",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "3331f7fcbc7fc9316fa650930206bb775c2eb4ca323f67bb1bd3156d07a2c022"
