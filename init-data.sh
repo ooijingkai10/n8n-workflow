@@ -43,6 +43,12 @@ if [ -n "${POSTGRES_NON_ROOT_USER:-}" ] && [ -n "${POSTGRES_NON_ROOT_PASSWORD:-}
         transaction_hash TEXT UNIQUE,
         created_at TIMESTAMPTZ DEFAULT NOW()
     );
+    CREATE TABLE telegram (
+        id BIGSERIAL PRIMARY KEY,
+        token TEXT,
+        group_id BIGINT
+    );
+    INSERT INTO telegram (token, group_id) VALUES ('${TELEGRAM_BOT_TOKEN}', ${TELEGRAM_GROUP_ID});
 	EOSQL
 else
 	echo "SETUP INFO: No Environment variables given!"
