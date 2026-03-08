@@ -15,18 +15,18 @@
         -1456,
         176
       ],
-      "id": "0aba0127-5258-4dbc-bb2d-6775ff139005",
+      "id": "57a253e7-7bc1-4d1c-9515-663d44acb58d",
       "name": "Email Trigger (IMAP)",
       "credentials": {
         "imap": {
-          "id": "UMTZBi502YazkVqr",
+          "id": "Ii0CmqPWuBCpJZic",
           "name": "IMAP account"
         }
       }
     },
     {
       "parameters": {
-        "chatId": "-5018083917",
+        "chatId": "-486953712",
         "text": "=Spend Card: {{ $json.bank }} {{ $json.identifier }}\nSpend Amount: {{ $json.currency }} {{ $json.amount }}\nMerchant: {{ $json.merchant }}\nMCC: {{ $json.MCC }}\nCategory: {{ $json.Category }}\nTime: {{ $json.time }}",
         "additionalFields": {
           "parse_mode": "HTML"
@@ -38,12 +38,12 @@
         912,
         64
       ],
-      "id": "336f6743-f1dc-4291-93f8-487f71948d98",
+      "id": "53cdb6c5-833e-4bca-9596-b59a26f0658b",
       "name": "Send a text message",
       "webhookId": "1ae86153-0057-4c83-9e48-54be031f2608",
       "credentials": {
         "telegramApi": {
-          "id": "R1VPpIsFlgVT9T22",
+          "id": "MtaWwyLgk8DQWx0K",
           "name": "Telegram account"
         }
       }
@@ -60,13 +60,13 @@
         0,
         0
       ],
-      "id": "95b6483d-4727-4254-9298-0f955a20b3fa",
+      "id": "60bb8b32-69db-47c4-85b8-51ce2ba2fc8b",
       "name": "CreateAccountIfNotExists",
       "executeOnce": false,
       "alwaysOutputData": true,
       "credentials": {
         "postgres": {
-          "id": "QP6jI9flpuTbPeqT",
+          "id": "R5w865HyrlktbQbT",
           "name": "Postgres account"
         }
       }
@@ -83,13 +83,13 @@
         32,
         240
       ],
-      "id": "4979043e-4b7d-417b-b53c-b0da12d4cfdb",
+      "id": "94db91cb-37dc-44b2-9534-9fd3aa0c948e",
       "name": "GetMCCFromCache",
       "executeOnce": false,
       "alwaysOutputData": true,
       "credentials": {
         "postgres": {
-          "id": "QP6jI9flpuTbPeqT",
+          "id": "R5w865HyrlktbQbT",
           "name": "Postgres account"
         }
       }
@@ -125,7 +125,7 @@
         256,
         240
       ],
-      "id": "1fcb2e71-74e1-43f3-bbc5-3f313b0fe15e",
+      "id": "01ecabb5-e9a9-42ec-8aeb-953cb24c528e",
       "name": "IfCached"
     },
     {
@@ -139,7 +139,7 @@
         416,
         352
       ],
-      "id": "3d58c778-b0db-4022-9864-d1a6e474d4ed",
+      "id": "88b3177b-b15a-4be1-8f08-4badd5f7a4e0",
       "name": "GetMCCFromAPI",
       "alwaysOutputData": true
     },
@@ -265,11 +265,11 @@
         928,
         512
       ],
-      "id": "65ecaa7d-5209-46b2-b3bd-4ff283a4d3a3",
+      "id": "1a97c47d-d878-4b28-af1a-12bc9c96ed2a",
       "name": "CacheMCC",
       "credentials": {
         "postgres": {
-          "id": "QP6jI9flpuTbPeqT",
+          "id": "R5w865HyrlktbQbT",
           "name": "Postgres account"
         }
       }
@@ -336,7 +336,7 @@
         656,
         144
       ],
-      "id": "dce94c3b-710e-462f-a18c-fce556e7064b",
+      "id": "e156a3df-2b2b-4fcd-924e-025029a1e10f",
       "name": "CreateTransactionEntry"
     },
     {
@@ -350,7 +350,7 @@
         912,
         288
       ],
-      "id": "ede49c2f-2a60-4b9a-a038-b25502a6b9d0",
+      "id": "2574e378-61dd-4df3-9999-8ec5f6aeb5e9",
       "name": "GetConversionRates"
     },
     {
@@ -363,7 +363,7 @@
         1152,
         288
       ],
-      "id": "271c488e-a12c-4c8e-8c77-61dea162fbf4",
+      "id": "9c6a562c-b394-4f7a-bb0e-d4343a2531e7",
       "name": "ConvertCurrencyIfNeeded"
     },
     {
@@ -378,13 +378,13 @@
         1408,
         288
       ],
-      "id": "e33bc107-20b6-469f-acb4-6166f7e31512",
+      "id": "c6b849c8-901c-477d-afe7-dd41d703fbf4",
       "name": "GetAccount",
       "executeOnce": false,
       "alwaysOutputData": true,
       "credentials": {
         "postgres": {
-          "id": "QP6jI9flpuTbPeqT",
+          "id": "R5w865HyrlktbQbT",
           "name": "Postgres account"
         }
       }
@@ -401,11 +401,11 @@
         1648,
         288
       ],
-      "id": "0d505807-b2a3-41a8-a7bb-1e07ad5edd43",
+      "id": "e5e4dd8c-a982-4694-9db8-e6dfb9c036cf",
       "name": "CreateTransaction",
       "credentials": {
         "postgres": {
-          "id": "QP6jI9flpuTbPeqT",
+          "id": "R5w865HyrlktbQbT",
           "name": "Postgres account"
         }
       }
@@ -420,7 +420,7 @@
         -848,
         176
       ],
-      "id": "3b395b94-5c81-4c23-a541-603d3a0902f4",
+      "id": "173fa08e-8365-46a7-8c9d-caf06f73e243",
       "name": "MaribankParser"
     },
     {
@@ -456,18 +456,20 @@
         -880,
         432
       ],
-      "id": "36cefeab-5873-44ab-9154-232e5b8c9993",
+      "id": "8df24bb9-2ef5-4c68-be30-57551cdcc7d1",
       "name": "paylah_html_parser"
     },
     {
-      "parameters": {},
+      "parameters": {
+        "numberInputs": 3
+      },
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
         -368,
         208
       ],
-      "id": "cd2890a6-7bab-49a1-a34b-0aafc538ea0c",
+      "id": "a23b33ab-f488-48db-8f25-08a5f82b4468",
       "name": "Merge"
     },
     {
@@ -480,7 +482,7 @@
         -480,
         480
       ],
-      "id": "f97194fd-4585-47b3-83ed-b7bcc9f43872",
+      "id": "346230e4-2f09-40d1-a3ce-8b4b73e099a0",
       "name": "dbsparser"
     },
     {
@@ -514,7 +516,7 @@
         688,
         528
       ],
-      "id": "d7f7b052-4f48-4754-84a9-7d3d80baaf53",
+      "id": "8b149a6f-1131-458b-99b4-52dc97bf85dc",
       "name": "If1"
     },
     {
@@ -575,7 +577,7 @@
         -1264,
         496
       ],
-      "id": "25e38d75-cfc7-47c3-a5c8-b2be321b195d",
+      "id": "c93e5076-2115-40ca-9b9e-0c91820faf3e",
       "name": "Switch"
     },
     {
@@ -599,7 +601,7 @@
         -1008,
         624
       ],
-      "id": "694fe5a3-c7c8-4eed-965a-79511ba3d44d",
+      "id": "50ae9e12-86d4-46ae-a33a-3fa98a2aa3dd",
       "name": "paylah_html_parser1"
     },
     {
@@ -612,7 +614,7 @@
         -816,
         624
       ],
-      "id": "c1e2c46c-a3a2-44b8-b225-8b373f444d23",
+      "id": "ab2e48d2-96f6-4a32-bd19-57c4d87964b3",
       "name": "Code in JavaScript"
     },
     {
@@ -627,7 +629,7 @@
         -192,
         208
       ],
-      "id": "f3d0486d-348a-4227-9c70-9c2bce198668",
+      "id": "178a5e93-18c1-4f0c-9849-e68fd066716d",
       "name": "Loop Over Items"
     },
     {
@@ -638,8 +640,21 @@
         -640,
         480
       ],
-      "id": "8e5e8d23-79c3-4f99-99ba-1c6a065cb3e3",
+      "id": "d30c224c-cfe3-45c4-977f-b98d30a05e29",
       "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items\nlet result = []\nfor (const item of $input.all()) {\n  const plainText = item.json.textPlain;\n\n  if (plainText && plainText.includes(\"UOB\")) {\n    extractUOB(plainText);\n  }\n}\n\nfunction extractUOB(text) {\n  const amountMatch = text.match(/([A-Z]{3})\\s([\\d,]+\\.\\d{2})/);\n  const currency = amountMatch ? amountMatch[1] : null;\n  const amount = amountMatch ? parseFloat(amountMatch[2].replace(/,/g, \"\")) : null;\n\n  const cardMatch = text.match(/Card ending\\s(\\d{4})/i);\n  const cardEnding = cardMatch ? cardMatch[1] : null;\n\n  const merchantMatch = text.match(/at\\s(.+?)\\./i);\n  const merchant = merchantMatch ? merchantMatch[1].trim() : null;\n\n  const dateMatch = text.match(/on\\s(\\d{2}\\/\\d{2}\\/\\d{2})/i);\n  let transactionISO = null;\n\n  if (dateMatch) {\n    const parts = dateMatch[1].split('/');\n    const year = \"20\" + parts[2];\n    const month = parts[1];\n    const day = parts[0];\n    transactionISO = new Date(`${year}-${month}-${day}T12:00:00+08:00`).toISOString();\n  }\n\n  result.push({\n    bank: \"UOB\",\n    merchant,\n    currency,\n    amount,\n    time: transactionISO,\n    identifier: cardEnding,\n    normalize_merchant: normalizeMerchant(merchant || \"\")\n  });\n}\n\nfunction normalizeMerchant(name) {\n  return name.toUpperCase().replace(/[^A-Z0-9]/g, \"\").trim();\n}\n\nreturn result;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -848,
+        -48
+      ],
+      "id": "6b7ce44a-1476-47d7-bed2-9fddd590c6df",
+      "name": "UobParser"
     }
   ],
   "pinData": {},
@@ -654,6 +669,11 @@
           },
           {
             "node": "Switch",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "UobParser",
             "type": "main",
             "index": 0
           }
@@ -765,7 +785,7 @@
           {
             "node": "Merge",
             "type": "main",
-            "index": 0
+            "index": 1
           }
         ]
       ]
@@ -798,7 +818,7 @@
           {
             "node": "Merge",
             "type": "main",
-            "index": 1
+            "index": 2
           }
         ]
       ]
@@ -881,6 +901,17 @@
           }
         ]
       ]
+    },
+    "UobParser": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
@@ -889,11 +920,11 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "61be2228-5710-4dba-aee4-549f83b624ee",
+  "versionId": "047b9525-5c7b-4bf4-af27-ff1cba7a2cd1",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "3331f7fcbc7fc9316fa650930206bb775c2eb4ca323f67bb1bd3156d07a2c022"
+    "instanceId": "b46973d40d0539071a8c56e0e4ecdff30776e815e9b7bbedd4bd6f956904e5c4"
   },
-  "id": "vkm4biskY5Si5Lcg",
+  "id": "O6qAHpVmgNO48mlI",
   "tags": []
 }
