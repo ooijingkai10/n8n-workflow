@@ -19,14 +19,14 @@
       "name": "Email Trigger (IMAP)",
       "credentials": {
         "imap": {
-          "id": "Ii0CmqPWuBCpJZic",
+          "id": "jaUzCS8DoF2kg4L2",
           "name": "IMAP account"
         }
       }
     },
     {
       "parameters": {
-        "chatId": "-486953712",
+        "chatId": "={{ $('GetTelegram').item.json.group_id }}",
         "text": "=Spend Card: {{ $json.bank }} {{ $json.identifier }}\nSpend Amount: {{ $json.currency }} {{ $json.amount }}\nMerchant: {{ $json.merchant }}\nMCC: {{ $json.MCC }}\nCategory: {{ $json.Category }}\nTime: {{ $json.time }}",
         "additionalFields": {
           "parse_mode": "HTML"
@@ -35,7 +35,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        912,
+        992,
         64
       ],
       "id": "53cdb6c5-833e-4bca-9596-b59a26f0658b",
@@ -43,7 +43,7 @@
       "webhookId": "1ae86153-0057-4c83-9e48-54be031f2608",
       "credentials": {
         "telegramApi": {
-          "id": "MtaWwyLgk8DQWx0K",
+          "id": "nbHkKJJySQ1pgycv",
           "name": "Telegram account"
         }
       }
@@ -66,7 +66,7 @@
       "alwaysOutputData": true,
       "credentials": {
         "postgres": {
-          "id": "R5w865HyrlktbQbT",
+          "id": "tJk4TZtu62G05Qy6",
           "name": "Postgres account"
         }
       }
@@ -89,7 +89,7 @@
       "alwaysOutputData": true,
       "credentials": {
         "postgres": {
-          "id": "R5w865HyrlktbQbT",
+          "id": "tJk4TZtu62G05Qy6",
           "name": "Postgres account"
         }
       }
@@ -106,7 +106,7 @@
           "conditions": [
             {
               "id": "801b1e8f-5271-47e5-b81a-830d94786aae",
-              "leftValue": "={{ $json }}",
+              "leftValue": "={{ $('GetMCCFromCache').item.json }}",
               "rightValue": "",
               "operator": {
                 "type": "object",
@@ -122,8 +122,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        256,
-        240
+        416,
+        224
       ],
       "id": "01ecabb5-e9a9-42ec-8aeb-953cb24c528e",
       "name": "IfCached"
@@ -136,8 +136,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        416,
-        352
+        544,
+        384
       ],
       "id": "88b3177b-b15a-4be1-8f08-4badd5f7a4e0",
       "name": "GetMCCFromAPI",
@@ -257,19 +257,21 @@
           "attemptToConvertTypes": false,
           "convertFieldsToString": false
         },
-        "options": {}
+        "options": {
+          "skipOnConflict": true
+        }
       },
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        928,
-        512
+        1056,
+        544
       ],
       "id": "1a97c47d-d878-4b28-af1a-12bc9c96ed2a",
       "name": "CacheMCC",
       "credentials": {
         "postgres": {
-          "id": "R5w865HyrlktbQbT",
+          "id": "tJk4TZtu62G05Qy6",
           "name": "Postgres account"
         }
       }
@@ -281,13 +283,13 @@
             {
               "id": "944bb8ec-fc55-4028-89ba-ea9f85f5db50",
               "name": "MCC",
-              "value": "={{ $('GetMCCFromCache').item.json.mcc_code }}{{ $json.MCC }}",
+              "value": "={{ $('GetMCCFromCache').item.json.mcc_code || $json.MCC }}",
               "type": "string"
             },
             {
               "id": "06418e6a-7ac8-496c-b691-7aaf67aa97f5",
               "name": "Category",
-              "value": "={{ $('GetMCCFromCache').item.json.category }}{{ $json.Category }}",
+              "value": "={{ $('GetMCCFromCache').item.json.category || $json.Category }}",
               "type": "string"
             },
             {
@@ -333,8 +335,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        656,
-        144
+        784,
+        176
       ],
       "id": "e156a3df-2b2b-4fcd-924e-025029a1e10f",
       "name": "CreateTransactionEntry"
@@ -347,8 +349,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        912,
-        288
+        1040,
+        320
       ],
       "id": "2574e378-61dd-4df3-9999-8ec5f6aeb5e9",
       "name": "GetConversionRates"
@@ -360,8 +362,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1152,
-        288
+        1280,
+        320
       ],
       "id": "9c6a562c-b394-4f7a-bb0e-d4343a2531e7",
       "name": "ConvertCurrencyIfNeeded"
@@ -375,8 +377,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1408,
-        288
+        1536,
+        320
       ],
       "id": "c6b849c8-901c-477d-afe7-dd41d703fbf4",
       "name": "GetAccount",
@@ -384,7 +386,7 @@
       "alwaysOutputData": true,
       "credentials": {
         "postgres": {
-          "id": "R5w865HyrlktbQbT",
+          "id": "tJk4TZtu62G05Qy6",
           "name": "Postgres account"
         }
       }
@@ -398,14 +400,14 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1648,
-        288
+        1776,
+        320
       ],
       "id": "e5e4dd8c-a982-4694-9db8-e6dfb9c036cf",
       "name": "CreateTransaction",
       "credentials": {
         "postgres": {
-          "id": "R5w865HyrlktbQbT",
+          "id": "tJk4TZtu62G05Qy6",
           "name": "Postgres account"
         }
       }
@@ -513,8 +515,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        688,
-        528
+        816,
+        560
       ],
       "id": "8b149a6f-1131-458b-99b4-52dc97bf85dc",
       "name": "If1"
@@ -655,6 +657,29 @@
       ],
       "id": "6b7ce44a-1476-47d7-bed2-9fddd590c6df",
       "name": "UobParser"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM telegram LIMIT 1;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        240,
+        224
+      ],
+      "id": "66c8c7d7-9be7-4d30-9a2d-22aa2fa4c096",
+      "name": "GetTelegram",
+      "executeOnce": false,
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "tJk4TZtu62G05Qy6",
+          "name": "Postgres account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -684,12 +709,12 @@
       "main": [
         [
           {
-            "node": "IfCached",
+            "node": "Loop Over Items",
             "type": "main",
             "index": 0
           },
           {
-            "node": "Loop Over Items",
+            "node": "GetTelegram",
             "type": "main",
             "index": 0
           }
@@ -912,6 +937,17 @@
           }
         ]
       ]
+    },
+    "GetTelegram": {
+      "main": [
+        [
+          {
+            "node": "IfCached",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
@@ -920,11 +956,11 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "047b9525-5c7b-4bf4-af27-ff1cba7a2cd1",
+  "versionId": "5b466e8f-fcab-42aa-a088-ce9a2cc5980e",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "b46973d40d0539071a8c56e0e4ecdff30776e815e9b7bbedd4bd6f956904e5c4"
+    "instanceId": "0945278be98875cb33a56a40043fc1f2ecdb9ae595a05fcef120c49b0e6a1bd8"
   },
-  "id": "O6qAHpVmgNO48mlI",
+  "id": "spendtracker",
   "tags": []
 }
