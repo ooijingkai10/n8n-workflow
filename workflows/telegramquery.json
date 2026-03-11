@@ -141,7 +141,7 @@
       "typeVersion": 1.1,
       "position": [
         128,
-        480
+        544
       ],
       "id": "d17e3b3d-e1d9-44fe-9be9-72bfef35d6c7",
       "name": "Update row(s)"
@@ -197,6 +197,30 @@
               },
               "renameOutput": true,
               "outputKey": "GetTotalSpendByCards"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "cc296383-de2e-49b2-a663-d32878f4fed6",
+                    "leftValue": "={{ $json.result[0].message.text }}",
+                    "rightValue": "/updatemcc",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "UpdateMCC"
             },
             {
               "conditions": {
@@ -323,8 +347,8 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1.1,
       "position": [
-        -128,
-        448
+        -176,
+        592
       ],
       "id": "d2cd99f9-578f-4803-afa1-b19ae47be4a3",
       "name": "Update row(s)2"
@@ -338,8 +362,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        112,
-        320
+        160,
+        144
       ],
       "id": "91ab8d68-ee5c-4c5c-ad4e-6c28019971b5",
       "name": "Execute a SQL query1",
@@ -359,8 +383,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        336,
-        320
+        384,
+        144
       ],
       "id": "7db2b10a-08d2-444f-ac2b-2cd04bac8328",
       "name": "Send a text message1",
@@ -415,8 +439,8 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1.1,
       "position": [
-        544,
-        320
+        592,
+        144
       ],
       "id": "3bc07a14-dc77-4a3f-b761-5af0ac094c0c",
       "name": "Update row(s)3"
@@ -448,8 +472,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -352,
-        464
+        -400,
+        608
       ],
       "id": "17fe76bf-cab4-4830-b6de-d983bbde758d",
       "name": "If1"
@@ -627,6 +651,20 @@
           "name": "Postgres account"
         }
       }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Add a new field called 'myNewField' to the JSON of the item\n// $input.item.json.myNewField = 1;\n\n// split the text to get the transaction id and the mcc code\nlet param = []\nparam = $input.item.json.result[0].message.text.split(' ')\n$input.item.json.transaction_id = param[2]\n$input.item.json.mcc_code = param[3]\n\n\nreturn $input.item;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        128,
+        352
+      ],
+      "id": "628ca0c9-0984-423c-b20e-43e7e46f5502",
+      "name": "Code in JavaScript"
     }
   ],
   "pinData": {},
@@ -694,6 +732,13 @@
         [
           {
             "node": "Execute a SQL query1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code in JavaScript",
             "type": "main",
             "index": 0
           }
@@ -801,16 +846,16 @@
       ]
     }
   },
-  "active": true,
+  "active": false,
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "32a72bc4-7b46-4673-8a39-ff2d6d26f500",
+  "versionId": "eae70329-815c-46aa-9581-673de4dae062",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "4916a0a99b8771ceaf3fbe35ca3e9e1bd743b801c4a3da404f3a4f4e253c2221"
+    "instanceId": "cb0912f123cfee09b97b438e627cddf4a1a902bdc3af1e91d013d2ed0445c724"
   },
   "id": "telegramquery",
   "tags": []

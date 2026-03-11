@@ -1,9 +1,8 @@
 #!/bin/bash
-set -e;
-
+set -e
 
 if [ -n "${POSTGRES_NON_ROOT_USER:-}" ] && [ -n "${POSTGRES_NON_ROOT_PASSWORD:-}" ]; then
-	psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
+  psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
 		CREATE USER ${POSTGRES_NON_ROOT_USER} WITH PASSWORD '${POSTGRES_NON_ROOT_PASSWORD}';
 		GRANT ALL PRIVILEGES ON DATABASE ${POSTGRES_DB} TO ${POSTGRES_NON_ROOT_USER};
 		GRANT CREATE ON SCHEMA public TO ${POSTGRES_NON_ROOT_USER};
@@ -41,6 +40,7 @@ if [ -n "${POSTGRES_NON_ROOT_USER:-}" ] && [ -n "${POSTGRES_NON_ROOT_PASSWORD:-}
         mcc_code TEXT,
         transaction_timestamp TIMESTAMPTZ NOT NULL,
         transaction_hash TEXT UNIQUE,
+        merchant_id BIGINT REFERENCES merchant_mcc_cache(id),
         created_at TIMESTAMPTZ DEFAULT NOW()
     );
     CREATE TABLE telegram (
@@ -51,5 +51,5 @@ if [ -n "${POSTGRES_NON_ROOT_USER:-}" ] && [ -n "${POSTGRES_NON_ROOT_PASSWORD:-}
     INSERT INTO telegram (token, group_id) VALUES ('${TELEGRAM_BOT_TOKEN}', ${TELEGRAM_GROUP_ID});
 	EOSQL
 else
-	echo "SETUP INFO: No Environment variables given!"
+  echo "SETUP INFO: No Environment variables given!"
 fi

@@ -3,9 +3,9 @@
   "nodes": [
     {
       "parameters": {
-        "mailbox": "spendings",
+        "mailbox": "spendingstest",
         "options": {
-          "customEmailConfig": "=[\"UNSEEN\"]",
+          "customEmailConfig": "=[\"ALL\"]",
           "forceReconnect": 30
         }
       },
@@ -27,7 +27,24 @@
     {
       "parameters": {
         "chatId": "={{ $('GetTelegram').item.json.group_id }}",
-        "text": "=Spend Card: {{ $json.bank }} {{ $json.identifier }}\nSpend Amount: {{ $json.currency }} {{ $json.amount }}\nMerchant: {{ $json.merchant }}\nMCC: {{ $json.MCC }}\nCategory: {{ $json.Category }}\nTime: {{ $json.time }}",
+        "text": "=Spend Card: {{ $('CreateTransactionEntry').item.json.bank }} {{ $('CreateTransactionEntry').item.json.identifier }}\nSpend Amount: {{ $json.currency }} {{ $json.amount }}\nMerchant: {{ $json.merchant }}\nMCC: {{ $json.mcc_code }}\nCategory: {{ $json.category }}\nTime: {{ $('CreateTransactionEntry').item.json.time }}",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "UpdateMCC",
+                    "additionalFields": {
+                      "switch_inline_query_current_chat": "=/updatemcc {{ $json.id }} "
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
         "additionalFields": {
           "parse_mode": "HTML"
         }
@@ -35,8 +52,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        992,
-        64
+        2208,
+        320
       ],
       "id": "53cdb6c5-833e-4bca-9596-b59a26f0658b",
       "name": "Send a text message",
@@ -80,8 +97,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        32,
-        240
+        16,
+        256
       ],
       "id": "94db91cb-37dc-44b2-9534-9fd3aa0c948e",
       "name": "GetMCCFromCache",
@@ -106,23 +123,31 @@
           "conditions": [
             {
               "id": "801b1e8f-5271-47e5-b81a-830d94786aae",
-              "leftValue": "={{ $('GetMCCFromCache').item.json }}",
-              "rightValue": "",
+              "leftValue": "={{ $('GetMCCFromCache').item.json.mcc_code }}",
+              "rightValue": "null",
               "operator": {
-                "type": "object",
-                "operation": "notEmpty",
-                "singleValue": true
+                "type": "string",
+                "operation": "notEquals"
+              }
+            },
+            {
+              "id": "18ec8176-24a6-483f-bb8c-afcdfc37e4eb",
+              "leftValue": "={{ $('GetFromMCCSim').item.json.mcc_code  }}",
+              "rightValue": "null",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
               }
             }
           ],
-          "combinator": "and"
+          "combinator": "or"
         },
         "options": {}
       },
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        416,
+        624,
         224
       ],
       "id": "01ecabb5-e9a9-42ec-8aeb-953cb24c528e",
@@ -136,7 +161,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        544,
+        784,
         384
       ],
       "id": "88b3177b-b15a-4be1-8f08-4badd5f7a4e0",
@@ -264,7 +289,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1056,
+        1264,
         544
       ],
       "id": "1a97c47d-d878-4b28-af1a-12bc9c96ed2a",
@@ -335,7 +360,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        784,
+        992,
         176
       ],
       "id": "e156a3df-2b2b-4fcd-924e-025029a1e10f",
@@ -349,7 +374,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        1040,
+        1248,
         320
       ],
       "id": "2574e378-61dd-4df3-9999-8ec5f6aeb5e9",
@@ -362,7 +387,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1280,
+        1488,
         320
       ],
       "id": "9c6a562c-b394-4f7a-bb0e-d4343a2531e7",
@@ -377,7 +402,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1536,
+        1744,
         320
       ],
       "id": "c6b849c8-901c-477d-afe7-dd41d703fbf4",
@@ -394,13 +419,13 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "INSERT INTO transactions (\n    account_id,\n    merchant,\n    amount,\n    currency,\n    amount_base_currency,\n    category,\n    mcc_code,\n    transaction_timestamp,\n    transaction_hash\n)\nVALUES (\n    {{ $json.id }},\n    '{{ $('ConvertCurrencyIfNeeded').item.json.merchant }}',\n    {{ $('ConvertCurrencyIfNeeded').item.json.amount }},\n    '{{ $('ConvertCurrencyIfNeeded').item.json.currency }}',\n    {{ $('ConvertCurrencyIfNeeded').item.json.amount_base_currency }},\n    '{{ $('ConvertCurrencyIfNeeded').item.json.Category }}',\n    '{{ $('ConvertCurrencyIfNeeded').item.json.MCC }}',\n    '{{ $('ConvertCurrencyIfNeeded').item.json.time }}',\n    '{{ $('ConvertCurrencyIfNeeded').item.json.transaction_hash }}'\n)ON CONFLICT (transaction_hash) DO NOTHING;",
+        "query": "INSERT INTO transactions (\n    account_id,\n    merchant,\n    amount,\n    currency,\n    amount_base_currency,\n    category,\n    mcc_code,\n    transaction_timestamp,\n    transaction_hash\n)\nVALUES (\n    {{ $json.id }},\n    '{{ $('ConvertCurrencyIfNeeded').item.json.merchant }}',\n    {{ $('ConvertCurrencyIfNeeded').item.json.amount }},\n    '{{ $('ConvertCurrencyIfNeeded').item.json.currency }}',\n    {{ $('ConvertCurrencyIfNeeded').item.json.amount_base_currency }},\n    '{{ $('ConvertCurrencyIfNeeded').item.json.Category }}',\n    '{{ $('ConvertCurrencyIfNeeded').item.json.MCC }}',\n    '{{ $('ConvertCurrencyIfNeeded').item.json.time }}',\n    '{{ $('ConvertCurrencyIfNeeded').item.json.transaction_hash }}'\n)\nON CONFLICT (transaction_hash) DO UPDATE\nSET transaction_hash = transactions.transaction_hash  -- dummy update to trigger RETURNING\nRETURNING *;",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1776,
+        1984,
         320
       ],
       "id": "e5e4dd8c-a982-4694-9db8-e6dfb9c036cf",
@@ -515,7 +540,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        816,
+        1024,
         560
       ],
       "id": "8b149a6f-1131-458b-99b4-52dc97bf85dc",
@@ -667,12 +692,34 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        240,
+        448,
         224
       ],
       "id": "66c8c7d7-9be7-4d30-9a2d-22aa2fa4c096",
       "name": "GetTelegram",
       "executeOnce": false,
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "tJk4TZtu62G05Qy6",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT *,\n       similarity('{{ $('Loop Over Items').item.json.normalize_merchant }}', merchant_normalized) AS sim\nFROM merchant_mcc_cache WHERE similarity('{{ $('Loop Over Items').item.json.normalize_merchant }}', merchant_normalized) > 0.4\nORDER BY sim DESC;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        224,
+        256
+      ],
+      "id": "d816e352-e524-4ede-9989-dbc9935f7c15",
+      "name": "GetFromMCCSim",
       "alwaysOutputData": true,
       "credentials": {
         "postgres": {
@@ -709,12 +756,7 @@
       "main": [
         [
           {
-            "node": "Loop Over Items",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "GetTelegram",
+            "node": "GetFromMCCSim",
             "type": "main",
             "index": 0
           }
@@ -758,11 +800,6 @@
     "CreateTransactionEntry": {
       "main": [
         [
-          {
-            "node": "Send a text message",
-            "type": "main",
-            "index": 0
-          },
           {
             "node": "GetConversionRates",
             "type": "main",
@@ -948,6 +985,33 @@
           }
         ]
       ]
+    },
+    "GetFromMCCSim": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "GetTelegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CreateTransaction": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
@@ -956,10 +1020,10 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "5b466e8f-fcab-42aa-a088-ce9a2cc5980e",
+  "versionId": "a612be80-d836-4fcd-8ec9-a5fbace640d3",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "0945278be98875cb33a56a40043fc1f2ecdb9ae595a05fcef120c49b0e6a1bd8"
+    "instanceId": "cb0912f123cfee09b97b438e627cddf4a1a902bdc3af1e91d013d2ed0445c724"
   },
   "id": "spendtracker",
   "tags": []
