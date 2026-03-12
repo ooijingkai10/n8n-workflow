@@ -1,3 +1,4 @@
 .env.secret
 credentials.json
 .env
+.DS_Store

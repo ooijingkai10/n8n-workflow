@@ -15,7 +15,7 @@
         -608,
         224
       ],
-      "id": "61107edd-2409-481a-864c-ad336efdffaf",
+      "id": "47bf70e4-f00e-4488-beb9-4275cbfd5da3",
       "name": "Email Trigger (IMAP)",
       "credentials": {
         "imap": {
@@ -55,7 +55,7 @@
         3648,
         384
       ],
-      "id": "9b8e6e7a-03b1-41c9-824f-06ca95da3327",
+      "id": "723f4977-abc8-40d2-892a-e21d73ea9775",
       "name": "Send a text message",
       "webhookId": "1ae86153-0057-4c83-9e48-54be031f2608",
       "credentials": {
@@ -77,7 +77,7 @@
         848,
         48
       ],
-      "id": "12c687ab-7cbe-4fca-872b-0e44954928e3",
+      "id": "9c4d9bfe-3034-4df4-8fce-b2fb192d4357",
       "name": "CreateAccountIfNotExists",
       "executeOnce": false,
       "alwaysOutputData": true,
@@ -100,7 +100,7 @@
         864,
         304
       ],
-      "id": "f66fc49b-abba-4f4d-ae4c-0e183d37dd78",
+      "id": "62120016-c069-4505-a469-d557c109c05a",
       "name": "GetMCCFromCache",
       "executeOnce": false,
       "alwaysOutputData": true,
@@ -152,7 +152,7 @@
         1472,
         272
       ],
-      "id": "59998484-7b15-4fd1-9863-3df264a4b1a3",
+      "id": "028d71a3-4c5f-43b3-b266-4727c3c008cb",
       "name": "IfCached"
     },
     {
@@ -166,7 +166,7 @@
         1824,
         512
       ],
-      "id": "f457870a-2499-4516-b42e-7e82e34219cb",
+      "id": "9cc97b14-9469-4109-baf1-8a933b8d287d",
       "name": "GetMCCFromAPI",
       "alwaysOutputData": true
     },
@@ -182,7 +182,7 @@
         2144,
         512
       ],
-      "id": "7b10d298-414e-4961-b4ea-67f4e1948c04",
+      "id": "5f26f3b7-1534-4576-abcc-252a92f33b12",
       "name": "CreateCacheFromAPI",
       "credentials": {
         "postgres": {
@@ -229,7 +229,7 @@
         1632,
         144
       ],
-      "id": "26a72051-f489-4853-a93b-fae1f690e9f1",
+      "id": "255876bc-a30b-4647-b00e-102c0194d175",
       "name": "UseExactCache"
     },
     {
@@ -273,7 +273,7 @@
         1632,
         304
       ],
-      "id": "37eef2df-8c0c-4c9d-b15b-c845cd74acae",
+      "id": "4d199ba8-f4f4-4d6e-aca4-7071fa5483db",
       "name": "IfSimilar"
     },
     {
@@ -288,7 +288,7 @@
         1856,
         304
       ],
-      "id": "b3d0d611-399e-443d-a511-16dce0fd41f9",
+      "id": "105e0686-1420-44c1-9bfe-f3437095633e",
       "name": "CreateCacheFromSimilar",
       "credentials": {
         "postgres": {
@@ -365,7 +365,7 @@
         2448,
         384
       ],
-      "id": "edd55007-2c27-4f0b-aad0-92b2bde46a5a",
+      "id": "cab00de5-8f21-4287-88c2-2d9bedfb8063",
       "name": "CreateTransactionEntry"
     },
     {
@@ -379,7 +379,7 @@
         2688,
         384
       ],
-      "id": "7bc4c607-3c12-4c6e-8fac-eb18fd785043",
+      "id": "f9324d35-953d-486b-82d2-b20847d003ae",
       "name": "GetConversionRates",
       "continueOnFail": true
     },
@@ -393,7 +393,7 @@
         2928,
         384
       ],
-      "id": "a21b0f00-049b-4dd0-b77b-4267238a6af0",
+      "id": "40269bbb-755b-47de-9b98-0fb328fda85f",
       "name": "ConvertCurrencyIfNeeded"
     },
     {
@@ -408,7 +408,7 @@
         3184,
         384
       ],
-      "id": "a1f837dc-051c-4a19-92ec-c68f47afbdb4",
+      "id": "9da8c3cd-d1f5-44eb-b0e4-0dc96fccd92f",
       "name": "GetAccount",
       "executeOnce": false,
       "alwaysOutputData": true,
@@ -431,7 +431,7 @@
         3424,
         384
       ],
-      "id": "0870d0e0-5f7a-4933-8d2b-086e25e7e216",
+      "id": "da2ff7a6-c21f-4beb-9843-2e45c5ce4b3b",
       "name": "CreateTransaction",
       "credentials": {
         "postgres": {
@@ -450,7 +450,7 @@
         0,
         224
       ],
-      "id": "a718ad7e-c554-468c-9dce-e0092bdd3c5e",
+      "id": "218c9b3e-0a82-419f-b53d-8fa9f7cb790a",
       "name": "MaribankParser"
     },
     {
@@ -486,7 +486,7 @@
         -32,
         480
       ],
-      "id": "4bcc978d-8a01-4343-ad13-57e0556a0c47",
+      "id": "1afbf972-da95-4d82-b619-ebb485313d28",
       "name": "paylah_html_parser"
     },
     {
@@ -499,21 +499,8 @@
         480,
         256
       ],
-      "id": "c934b76d-296a-41fc-ac7b-24b43d5409d8",
+      "id": "3175b6b6-497f-441a-a617-0e24fad9364b",
       "name": "Merge"
-    },
-    {
-      "parameters": {
-        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\n\nlet result = []\nfor (const item of $input.all()) {\n\n    ExtractDBS(item)\n\n}\n\nfunction ExtractDBS(item) {\n    \n  let merchant = item.json.merchant\n  const amountMatch = item.json.amount.match(/([A-Z]{3})*([\\d,]+\\.\\d{2})/);\n  let currency = null\n  let amount = null\n   if (amountMatch) {\n      currency = amountMatch[1];\n      amount = parseFloat(amountMatch[2].replace(/,/g, \"\"));\n    }\n  // Get current year\n  const year = new Date().getFullYear();\n  \n  // Remove the timezone abbreviation, append year, and add SGT offset (+08:00)\n  const cleanStr = $input.item.json.time.replace(/\\(SGT\\)/, '').trim() + ` ${year} +08:00`;\n  \n  // Convert to Date and ISO string\n  const transactionISO = new Date(cleanStr).toISOString();\n  \n\n\n  result.push( {\n    bank: \"DBS\",\n    merchant,\n    currency,\n    amount,\n    time: transactionISO,\n    identifier: item.json.identifier,\n    normalize_merchant: normalizeMerchant(merchant)\n  });\n\n}\n\nfunction normalizeMerchant(name) {\n  return name\n    .toUpperCase()\n    .replace(/[^A-Z0-9]/g, \"\")\n    .trim();\n}\n\nreturn result"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        368,
-        528
-      ],
-      "id": "8c0cd2f2-4a6e-4eea-beae-401fbdcd65fe",
-      "name": "dbsparser"
     },
     {
       "parameters": {
@@ -573,36 +560,12 @@
         -416,
         544
       ],
-      "id": "3981bada-c880-4942-8551-5dda82c7dac7",
+      "id": "3fad4fba-cbf1-4d44-8f78-73ecdd750d54",
       "name": "Switch"
     },
     {
       "parameters": {
-        "operation": "extractHtmlContent",
-        "dataPropertyName": "textHtml",
-        "extractionValues": {
-          "values": [
-            {
-              "key": "cleaned",
-              "cssSelector": " table tr:nth-of-type(4) p:nth-child(4)",
-              "returnValue": "html"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.html",
-      "typeVersion": 1.2,
-      "position": [
-        -160,
-        672
-      ],
-      "id": "668709ce-a0ac-47ce-8ee5-680f3f3bd851",
-      "name": "paylah_html_parser1"
-    },
-    {
-      "parameters": {
-        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nlet result = []\nfor (const item of $input.all()) {\n  // 1️⃣ Decode HTML entity\n  const text = item.json.cleaned.replace(/&amp;/g, \"&\");\n  \n  // 2️⃣ Extract values\n  const timeMatch = text.match(/Date\\s*&\\s*Time:\\s*([^\\n<]+)/i);\n  const amountMatch = text.match(/Amount:\\s*([A-Z]{3}\\d+\\.\\d+)/i);\n  const fromMatch = text.match(/From:\\s*([^\\n<]+)/i);\n  const toMatch = text.match(/To:\\s*([^\\n<]+)/i);\n  \n  // 3️⃣ Build result\n  result.push({\n    time: timeMatch ? timeMatch[1].trim() : null,\n    // currency: amountMatch ? amountMatch[1] : null,\n    amount: amountMatch ? amountMatch[1] : null,\n    identifier: fromMatch ? fromMatch[1].trim() : null,\n    merchant: toMatch ? toMatch[1].trim() : null\n  });\n\n}\nreturn result\n"
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nlet result = []\nfor (const item of $input.all()) {\n  // 1️⃣ Decode HTML entity\n  const text = item.json.cleaned.replace(/&amp;/g, \"&\");\n  \n  // 2️⃣ Extract values\n  const timeMatch = text.match(/Date\\s*&\\s*Time:\\s*([^\\n<]+)/i);\n  const amountMatch = text.match(/Amount:\\s*([A-Z]{3}\\d+\\.\\d+)/i);\n  const fromMatch = text.match(/From:\\s*([^\\n<]+)/i);\n  const toMatch = text.match(/To:\\s*([^\\n<]+)/i);\n\n  const cardMatch = fromMatch[1].trim().match(/card ending\\s(\\d{4})/i);\n  const cardEnding = cardMatch ? cardMatch[1] : null;\n  \n  // 3️⃣ Build result\n  result.push({\n    time: timeMatch ? timeMatch[1].trim() : null,\n    // currency: amountMatch ? amountMatch[1] : null,\n    amount: amountMatch ? amountMatch[1] : null,\n    identifier: cardEnding,\n    merchant: toMatch ? toMatch[1].trim() : null\n  });\n\n}\nreturn result\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -610,7 +573,7 @@
         32,
         672
       ],
-      "id": "4bd81f10-08f7-4dce-87b4-1326d3939f14",
+      "id": "d08e702d-3293-4cc8-8697-634cedcefb5e",
       "name": "Code in JavaScript"
     },
     {
@@ -625,7 +588,7 @@
         656,
         256
       ],
-      "id": "4d886c81-2043-48f4-b6f4-177d53ace597",
+      "id": "a7b11cb0-5f0d-4e60-b20a-d021a6b2240a",
       "name": "Loop Over Items"
     },
     {
@@ -636,7 +599,7 @@
         208,
         528
       ],
-      "id": "1431a434-4bd7-4ccc-a1ee-4ef04c9d2afa",
+      "id": "cd3a3ee2-e391-4f69-b313-7a363f9f6ff1",
       "name": "Merge1"
     },
     {
@@ -649,7 +612,7 @@
         0,
         0
       ],
-      "id": "944b8189-0e06-4c2f-af11-f94719a243e9",
+      "id": "710b8391-f926-4069-bb71-103a7928f655",
       "name": "UobParser"
     },
     {
@@ -664,7 +627,7 @@
         1296,
         272
       ],
-      "id": "f17deee2-728b-4f5f-addf-ebb0832016a7",
+      "id": "86fbe365-923c-41ec-86ad-e68a07a02bbb",
       "name": "GetTelegram",
       "executeOnce": false,
       "alwaysOutputData": true,
@@ -687,7 +650,7 @@
         1072,
         304
       ],
-      "id": "ecf589b2-b443-4d94-b176-9763fc6641d8",
+      "id": "9e1139ea-0672-4678-b397-f11de6e27a9d",
       "name": "GetFromMCCSim",
       "alwaysOutputData": true,
       "credentials": {
@@ -696,6 +659,43 @@
           "name": "Postgres account"
         }
       }
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "dataPropertyName": "textHtml",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "cleaned",
+              "cssSelector": " table tr:nth-of-type(4) p:nth-child(4)",
+              "returnValue": "html"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        -160,
+        672
+      ],
+      "id": "cd01e1f5-54e1-4883-8573-a86a12ebf450",
+      "name": "dbs_card_html_parser"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\n\nlet result = []\nfor (const item of $input.all()) {\n\n    ExtractDBS(item)\n\n}\n\nfunction ExtractDBS(item) {\n    \n  let merchant = item.json.merchant\n  const amountMatch = item.json.amount.match(/([A-Z]{3})*([\\d,]+\\.\\d{2})/);\n  let currency = null\n  let amount = null\n   if (amountMatch) {\n      currency = amountMatch[1];\n      amount = parseFloat(amountMatch[2].replace(/,/g, \"\"));\n    }\n  // Get current year\n  const year = new Date().getFullYear();\n  \n  // Remove the timezone abbreviation, append year, and add SGT offset (+08:00)\n  const cleanStr = $input.item.json.time.replace(/\\(SGT\\)/, '').trim() + ` ${year} +08:00`;\n  \n  // Convert to Date and ISO string\n  const transactionISO = new Date(cleanStr).toISOString();\n  \n\n\n  result.push( {\n    bank: \"DBS\",\n    merchant,\n    currency,\n    amount,\n    time: transactionISO,\n    identifier: item.json.identifier,\n    normalize_merchant: normalizeMerchant(merchant)\n  });\n\n}\n\nfunction normalizeMerchant(name) {\n  return name\n    .toUpperCase()\n    .replace(/[^A-Z0-9]/g, \"\")\n    .trim();\n}\n\nreturn result"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        368,
+        528
+      ],
+      "id": "ad778327-e6d0-4e69-8724-540ac393b871",
+      "name": "DbsParser"
     }
   ],
   "pinData": {},
@@ -900,17 +900,6 @@
         ]
       ]
     },
-    "dbsparser": {
-      "main": [
-        [
-          {
-            "node": "Merge",
-            "type": "main",
-            "index": 2
-          }
-        ]
-      ]
-    },
     "Switch": {
       "main": [
         [
@@ -922,18 +911,7 @@
         ],
         [
           {
-            "node": "paylah_html_parser1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "paylah_html_parser1": {
-      "main": [
-        [
-          {
-            "node": "Code in JavaScript",
+            "node": "dbs_card_html_parser",
             "type": "main",
             "index": 0
           }
@@ -972,7 +950,7 @@
       "main": [
         [
           {
-            "node": "dbsparser",
+            "node": "DbsParser",
             "type": "main",
             "index": 0
           }
@@ -1016,6 +994,28 @@
           }
         ]
       ]
+    },
+    "dbs_card_html_parser": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DbsParser": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
     }
   },
   "active": true,
@@ -1024,9 +1024,10 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "2c426634-9a9c-4f51-a36b-9dd555134742",
+  "versionId": "74aa710c-ffb7-4a7b-8a7b-8785606162b8",
   "meta": {
-    "instanceId": "9060d50ef91e3336b69b231eb277ddbf649e363421bcac49696e39d16ad50e63"
+    "templateCredsSetupCompleted": true,
+    "instanceId": "21cbf5f4b074cb6076d705cc4435b7218d2a874f1e8dfc22b2b66cc7c2ba0c86"
   },
   "id": "spendtracker",
   "tags": []
