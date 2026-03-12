@@ -49,7 +49,7 @@ This starts PostgreSQL + n8n, creates base tables, imports workflows, and loads 
 
 4. Open n8n (optional):
 
-- http://localhost:5678
+- <http://localhost:5678>
 
 ---
 
@@ -77,9 +77,16 @@ docker compose exec -T postgres psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -f /d
 ```
 
 This migration handles:
+
 - `transactions.merchant_id` backfill + FK
 - `mcc_reference` table creation (Note: Ensure that the mcclist.csv is loaded onto postgres container in the /mcc path)
 - index creation and extension setup
+
+### 3) Restart n8n
+
+```sh
+docker compose restart n8n
+```
 
 ---
 
