@@ -83,7 +83,7 @@ services:
     entrypoint: ["/bin/sh", "/docker-entrypoint.d/init-data-n8n.sh"]
 
   api:
-    image: ghcr.io/spend-tracker-app/api:v1.0.1
+    image: ghcr.io/spend-tracker-app/api:v1.0.2
     restart: always
     environment:
       - PORT=4000
