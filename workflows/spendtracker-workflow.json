@@ -15,7 +15,7 @@
         -608,
         224
       ],
-      "id": "47bf70e4-f00e-4488-beb9-4275cbfd5da3",
+      "id": "5f6f1eba-a56e-4ffd-8902-973015f46298",
       "name": "Email Trigger (IMAP)",
       "credentials": {
         "imap": {
@@ -55,7 +55,7 @@
         3648,
         384
       ],
-      "id": "723f4977-abc8-40d2-892a-e21d73ea9775",
+      "id": "87cd6370-63c7-4533-b475-173cd84bbe39",
       "name": "Send a text message",
       "webhookId": "1ae86153-0057-4c83-9e48-54be031f2608",
       "credentials": {
@@ -77,7 +77,7 @@
         848,
         48
       ],
-      "id": "9c4d9bfe-3034-4df4-8fce-b2fb192d4357",
+      "id": "e6ec49a7-eba2-4bfb-b5ae-251bc449f93b",
       "name": "CreateAccountIfNotExists",
       "executeOnce": false,
       "alwaysOutputData": true,
@@ -100,7 +100,7 @@
         864,
         304
       ],
-      "id": "62120016-c069-4505-a469-d557c109c05a",
+      "id": "e4e00a8b-f522-4b11-b689-57fb020e67f8",
       "name": "GetMCCFromCache",
       "executeOnce": false,
       "alwaysOutputData": true,
@@ -152,7 +152,7 @@
         1472,
         272
       ],
-      "id": "028d71a3-4c5f-43b3-b266-4727c3c008cb",
+      "id": "798bd4d7-eafe-47dd-9d75-ce4b1901de18",
       "name": "IfCached"
     },
     {
@@ -166,7 +166,7 @@
         1824,
         512
       ],
-      "id": "9cc97b14-9469-4109-baf1-8a933b8d287d",
+      "id": "29b5307b-3747-4618-a45d-81f935dfee83",
       "name": "GetMCCFromAPI",
       "alwaysOutputData": true
     },
@@ -182,7 +182,7 @@
         2144,
         512
       ],
-      "id": "5f26f3b7-1534-4576-abcc-252a92f33b12",
+      "id": "93663828-7fa4-472a-ab45-6a4edb0b9d4a",
       "name": "CreateCacheFromAPI",
       "credentials": {
         "postgres": {
@@ -229,7 +229,7 @@
         1632,
         144
       ],
-      "id": "255876bc-a30b-4647-b00e-102c0194d175",
+      "id": "8bf8fc4d-d3fe-4c84-9ef7-3e6d21038cd5",
       "name": "UseExactCache"
     },
     {
@@ -273,7 +273,7 @@
         1632,
         304
       ],
-      "id": "4d199ba8-f4f4-4d6e-aca4-7071fa5483db",
+      "id": "d71e0aeb-1c53-4388-a057-638a0e08f92d",
       "name": "IfSimilar"
     },
     {
@@ -288,7 +288,7 @@
         1856,
         304
       ],
-      "id": "105e0686-1420-44c1-9bfe-f3437095633e",
+      "id": "36d80d0a-df23-4477-99df-13f8f435cfe6",
       "name": "CreateCacheFromSimilar",
       "credentials": {
         "postgres": {
@@ -365,7 +365,7 @@
         2448,
         384
       ],
-      "id": "cab00de5-8f21-4287-88c2-2d9bedfb8063",
+      "id": "03cf5646-56f5-4d74-ab60-0134a26e9474",
       "name": "CreateTransactionEntry"
     },
     {
@@ -379,7 +379,7 @@
         2688,
         384
       ],
-      "id": "f9324d35-953d-486b-82d2-b20847d003ae",
+      "id": "39173269-b8e3-4544-b004-431c5690aae9",
       "name": "GetConversionRates",
       "continueOnFail": true
     },
@@ -393,7 +393,7 @@
         2928,
         384
       ],
-      "id": "40269bbb-755b-47de-9b98-0fb328fda85f",
+      "id": "291a268a-2754-486c-91d9-5361d525d59f",
       "name": "ConvertCurrencyIfNeeded"
     },
     {
@@ -408,7 +408,7 @@
         3184,
         384
       ],
-      "id": "9da8c3cd-d1f5-44eb-b0e4-0dc96fccd92f",
+      "id": "a729f343-b0df-4191-b4cd-8b46839327e9",
       "name": "GetAccount",
       "executeOnce": false,
       "alwaysOutputData": true,
@@ -431,7 +431,7 @@
         3424,
         384
       ],
-      "id": "da2ff7a6-c21f-4beb-9843-2e45c5ce4b3b",
+      "id": "e93a1632-7ccf-4389-8af8-26ae7225ba90",
       "name": "CreateTransaction",
       "credentials": {
         "postgres": {
@@ -450,7 +450,7 @@
         0,
         224
       ],
-      "id": "218c9b3e-0a82-419f-b53d-8fa9f7cb790a",
+      "id": "2947a5ea-1e0f-4ff3-a781-5a779dc30525",
       "name": "MaribankParser"
     },
     {
@@ -486,12 +486,12 @@
         -32,
         480
       ],
-      "id": "1afbf972-da95-4d82-b619-ebb485313d28",
+      "id": "a6d4cf32-7248-4b34-83db-53028678d8ca",
       "name": "paylah_html_parser"
     },
     {
       "parameters": {
-        "numberInputs": 3
+        "numberInputs": 4
       },
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
@@ -499,7 +499,7 @@
         480,
         256
       ],
-      "id": "3175b6b6-497f-441a-a617-0e24fad9364b",
+      "id": "709e27b0-99b0-47f9-a76c-b7ed00976d0c",
       "name": "Merge"
     },
     {
@@ -560,7 +560,7 @@
         -416,
         544
       ],
-      "id": "3fad4fba-cbf1-4d44-8f78-73ecdd750d54",
+      "id": "fa373126-8169-4311-83a2-c9c5452ff017",
       "name": "Switch"
     },
     {
@@ -573,7 +573,7 @@
         32,
         672
       ],
-      "id": "d08e702d-3293-4cc8-8697-634cedcefb5e",
+      "id": "142b66cd-a64e-4e5b-8a15-f58e4135286e",
       "name": "Code in JavaScript"
     },
     {
@@ -588,7 +588,7 @@
         656,
         256
       ],
-      "id": "a7b11cb0-5f0d-4e60-b20a-d021a6b2240a",
+      "id": "cd1c3d0c-cebf-4af6-a90e-7b53198f48b0",
       "name": "Loop Over Items"
     },
     {
@@ -599,7 +599,7 @@
         208,
         528
       ],
-      "id": "cd3a3ee2-e391-4f69-b313-7a363f9f6ff1",
+      "id": "13f69cb0-c61b-4c3c-b6fe-40e673de8523",
       "name": "Merge1"
     },
     {
@@ -612,7 +612,7 @@
         0,
         0
       ],
-      "id": "710b8391-f926-4069-bb71-103a7928f655",
+      "id": "61fdd2ad-964e-4a07-93f6-737029945d85",
       "name": "UobParser"
     },
     {
@@ -627,7 +627,7 @@
         1296,
         272
       ],
-      "id": "86fbe365-923c-41ec-86ad-e68a07a02bbb",
+      "id": "49e4ce9d-5b23-4b75-88ff-621def6422b8",
       "name": "GetTelegram",
       "executeOnce": false,
       "alwaysOutputData": true,
@@ -650,7 +650,7 @@
         1072,
         304
       ],
-      "id": "9e1139ea-0672-4678-b397-f11de6e27a9d",
+      "id": "f153dec5-23bd-4f61-b307-b55c85f29dae",
       "name": "GetFromMCCSim",
       "alwaysOutputData": true,
       "credentials": {
@@ -681,7 +681,7 @@
         -160,
         672
       ],
-      "id": "cd01e1f5-54e1-4883-8573-a86a12ebf450",
+      "id": "d3e4e599-7f71-4adc-a2c6-98e9f6173059",
       "name": "dbs_card_html_parser"
     },
     {
@@ -694,8 +694,22 @@
         368,
         528
       ],
-      "id": "ad778327-e6d0-4e69-8724-540ac393b871",
+      "id": "cfa42581-390e-4e12-b161-4da35bbb4c5a",
       "name": "DbsParser"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "let text = $input.item.json.textHtml || \"\";\n\n// Early guard: ensure this looks like a Citibank notification and has content\nif (!text || !/citibank/i.test(text)) {\n  return {};\n}\n\nconst dateMatch = text.match(/Transaction date:\\s*(\\d{2}\\/\\d{2}\\/\\d{2})/i);\nconst timeMatch = text.match(/Transaction\\s*time:\\s*([0-9:]+)/i);\nconst merchantMatch = text.match(/Transaction\\s+details\\s*:\\s*(.*?)\\s+Singapore\\s+SGP/i);\nconst amountMatch = text.match(/Transaction amount:\\s*([A-Z]{3})([\\d,]+\\.\\d{2})/i);\nconst cardMatch = text.match(/Account number:\\s*(?:X{4}-){3}(\\d{4})/i);\n\n// If required fields are missing, do not emit a transaction\nif (!dateMatch || !amountMatch) {\n  return [];\n}\n\nconst merchant = merchantMatch?.[1]?.trim();\nconst currency = amountMatch ? amountMatch[1] : null;\nconst amount = amountMatch ? parseFloat(amountMatch[2].replace(/,/g, \"\")) : null;\nconst cardEnding = cardMatch ? cardMatch[1] : null;\n\nlet transactionISO = null;\nif (dateMatch) {\n  const parts = dateMatch[1].split('/');\n  const year = \"20\" + parts[2];\n  const month = parts[1];\n  const day = parts[0];\n\n  const time = timeMatch ? timeMatch[1] : \"12:00:00\";\n\n  transactionISO = new Date(`${year}-${month}-${day}T${time}+08:00`).toISOString();\n}\n\nfunction normalizeMerchant(name) {\n  return name.toUpperCase().replace(/[^A-Z0-9]/g, \"\").trim();\n}\n\nreturn {\n   bank: \"Citibank\",\n   merchant,\n   currency,\n   amount,\n   time: transactionISO,\n   identifier: cardEnding,\n   normalize_merchant: normalizeMerchant(merchant || \"\")\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        -192
+      ],
+      "id": "781b353c-fd08-4066-b10e-d81d7cffbfe0",
+      "name": "CitibankParser"
     }
   ],
   "pinData": {},
@@ -715,6 +729,11 @@
           },
           {
             "node": "UobParser",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "CitibankParser",
             "type": "main",
             "index": 0
           }
@@ -873,7 +892,7 @@
           {
             "node": "Merge",
             "type": "main",
-            "index": 1
+            "index": 2
           }
         ]
       ]
@@ -963,7 +982,7 @@
           {
             "node": "Merge",
             "type": "main",
-            "index": 0
+            "index": 1
           }
         ]
       ]
@@ -1012,7 +1031,18 @@
           {
             "node": "Merge",
             "type": "main",
-            "index": 2
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "CitibankParser": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -1024,7 +1054,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "74aa710c-ffb7-4a7b-8a7b-8785606162b8",
+  "versionId": "7bced175-1505-44ed-a27c-39acb329e5aa",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "21cbf5f4b074cb6076d705cc4435b7218d2a874f1e8dfc22b2b66cc7c2ba0c86"
