@@ -756,7 +756,7 @@
     {
       "parameters": {
         "chatId": "={{ $('TelegramToken').item.json.group_id }}",
-        "text": "=Spend Card: {{ $json.bank }} {{ $json.identifier }}\nSpend Amount: {{ $json.currency }} {{ $json.amount }}\nMerchant: {{ $json.merchant }}\nMCC: {{ $json.mcc_code }}\nCategory: {{ $json.category }}\nTime: {{ DateTime.fromISO($json.transaction_timestamp).setZone('Asia/Singapore').toFormat('yyyy-MM-dd HH:mm:ss') }}\nTransaction ID: {{ $json.transaction_id }}",
+        "text": "=Spend Card: {{ $json.bank }} {{ $json.identifier }}\nSpend Amount: {{ $json.currency }} {{ $json.amount }}\nMerchant: {{ $json.merchant.replace(/[*_`[~]/g, '\\$&') }}\nMCC: {{ $json.mcc_code }}\nCategory: {{ $json.category }}\nTime: {{ DateTime.fromISO($json.transaction_timestamp).setZone('Asia/Singapore').toFormat('yyyy-MM-dd HH:mm:ss') }}\nTransaction ID: {{ $json.transaction_id }}",
         "replyMarkup": "inlineKeyboard",
         "inlineKeyboard": {
           "rows": [
