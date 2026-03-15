@@ -18,7 +18,7 @@
         -1424,
         240
       ],
-      "id": "142f82d5-c24c-48f8-82b4-9463f9e0fd17",
+      "id": "748c04b3-9c77-4ced-a819-da83cf3a515b",
       "name": "Schedule Trigger"
     },
     {
@@ -32,7 +32,7 @@
         -688,
         240
       ],
-      "id": "978576ac-0990-46a2-8d49-d5773c61de63",
+      "id": "bfb2c9cd-e0a9-49ce-a50b-2f0cc44a74b1",
       "name": "HTTP Request"
     },
     {
@@ -52,7 +52,7 @@
         -880,
         240
       ],
-      "id": "8f1d49da-97db-4ec8-8da8-49f3e25883cf",
+      "id": "3180c8fe-9a4d-4586-b5e7-981fc69b6da9",
       "name": "TelegramOffset"
     },
     {
@@ -94,7 +94,7 @@
         -496,
         240
       ],
-      "id": "4e5010cc-2518-4266-9468-a67959795e63",
+      "id": "43af7508-c1d6-4da6-8df6-b3838ef87146",
       "name": "If"
     },
     {
@@ -143,7 +143,7 @@
         128,
         544
       ],
-      "id": "d17e3b3d-e1d9-44fe-9be9-72bfef35d6c7",
+      "id": "c989a2e3-92bc-4b01-b696-7e89ad5c64fc",
       "name": "Update row(s)"
     },
     {
@@ -255,7 +255,7 @@
         -288,
         144
       ],
-      "id": "6c958d44-b0ca-4785-864a-0a67592b303a",
+      "id": "1fdbe15e-6292-4655-a307-c762475a2bd2",
       "name": "Switch"
     },
     {
@@ -270,11 +270,11 @@
         0,
         0
       ],
-      "id": "a8cc256f-bd5e-411e-9d9d-d6de3d827ef8",
+      "id": "d6ef12f7-5ba8-4f72-94db-4ab915dc51c2",
       "name": "Execute a SQL query",
       "credentials": {
         "postgres": {
-          "id": "tJk4TZtu62G05Qy6",
+          "id": "iLFBj4TmTHLyxhnt",
           "name": "Postgres account"
         }
       }
@@ -294,7 +294,7 @@
         176,
         0
       ],
-      "id": "a8454ae6-3313-4b0c-b123-cc6ce55b91fe",
+      "id": "989eecd4-22af-4dc7-9dce-f2289d72627c",
       "name": "Send a text message",
       "webhookId": "ef90e087-9748-4a04-bc60-6977bd2c8454",
       "credentials": {
@@ -350,13 +350,13 @@
         -176,
         592
       ],
-      "id": "d2cd99f9-578f-4803-afa1-b19ae47be4a3",
+      "id": "f31be11d-6cbc-4d7d-91ff-e7762aafb6b9",
       "name": "Update row(s)2"
     },
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT \n    SUM(transactions.amount_base_currency) AS total_amount,\n    ACCOUNTS.identifier AS id,\n    ACCOUNTS.bank AS bank\nFROM \n    transactions\nINNER JOIN \n    ACCOUNTS \nON \n    ACCOUNTS.id = transactions.account_id\nGROUP BY \n    ACCOUNTS.bank,\n    ACCOUNTS.identifier;\n",
+        "query": "SELECT \n    SUM(transactions.amount_base_currency) AS total_amount,\n    ACCOUNTS.identifier as id,\n    ACCOUNTS.card_alias AS card_alias,\n    ACCOUNTS.bank AS bank\nFROM \n    transactions\nINNER JOIN \n    ACCOUNTS \nON \n    ACCOUNTS.id = transactions.account_id\nGROUP BY \n    ACCOUNTS.bank,\n    ACCOUNTS.identifier,\n    ACCOUNTS.card_alias;\n",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -365,11 +365,11 @@
         160,
         144
       ],
-      "id": "91ab8d68-ee5c-4c5c-ad4e-6c28019971b5",
+      "id": "4792e52d-fe07-41ad-b32c-8a69af7badf5",
       "name": "Execute a SQL query1",
       "credentials": {
         "postgres": {
-          "id": "tJk4TZtu62G05Qy6",
+          "id": "iLFBj4TmTHLyxhnt",
           "name": "Postgres account"
         }
       }
@@ -377,7 +377,7 @@
     {
       "parameters": {
         "chatId": "={{ $('TelegramToken').item.json.group_id }}",
-        "text": "=Card/Wallet: {{ $json.bank }} {{ $json.id }}\nTotal Amount Spent: SGD {{ $json.total_amount }}",
+        "text": "=Card/Wallet: {{ ($json.card_alias) || ($json.bank + ' ' + $json.id) }}\nTotal Amount Spent: SGD {{ $json.total_amount }}",
         "additionalFields": {}
       },
       "type": "n8n-nodes-base.telegram",
@@ -386,7 +386,7 @@
         384,
         144
       ],
-      "id": "7db2b10a-08d2-444f-ac2b-2cd04bac8328",
+      "id": "e2238a0e-e8a4-4f37-afb3-efbc18d2ef2d",
       "name": "Send a text message1",
       "webhookId": "ef90e087-9748-4a04-bc60-6977bd2c8454",
       "credentials": {
@@ -442,7 +442,7 @@
         592,
         144
       ],
-      "id": "3bc07a14-dc77-4a3f-b761-5af0ac094c0c",
+      "id": "6face375-e4cf-4e90-af47-df665da8605c",
       "name": "Update row(s)3"
     },
     {
@@ -475,7 +475,7 @@
         -400,
         608
       ],
-      "id": "17fe76bf-cab4-4830-b6de-d983bbde758d",
+      "id": "c7306e1b-aa76-48fd-9a48-4b07bf5c9b7d",
       "name": "If1"
     },
     {
@@ -501,7 +501,7 @@
         -1248,
         240
       ],
-      "id": "0e346bb8-c813-4cda-a045-7dab72b26074",
+      "id": "0979068c-96ef-45b8-bf1d-e8d8665b7e79",
       "name": "Create a data table"
     },
     {
@@ -540,7 +540,7 @@
         -720,
         464
       ],
-      "id": "c5316b40-39e6-4c37-9dfb-52acc1cc543a",
+      "id": "5340268a-5421-4334-86ca-a1f22f589088",
       "name": "Insert row",
       "alwaysOutputData": false
     },
@@ -567,7 +567,7 @@
         -928,
         464
       ],
-      "id": "36ec3256-cecb-4f09-bedd-f50dbdf008b8",
+      "id": "3cc0edd8-ce8d-440d-820d-098fae531100",
       "name": "If row does not exist",
       "alwaysOutputData": false
     },
@@ -617,7 +617,7 @@
         352,
         0
       ],
-      "id": "cc373266-3c17-4c35-bd86-6b932e8c433d",
+      "id": "e689d713-7b39-4242-bf5e-0c2c2b3505bb",
       "name": "Update row(s)1"
     },
     {
@@ -643,11 +643,11 @@
         -1072,
         240
       ],
-      "id": "3303011a-3373-46eb-a202-3a309429e2eb",
+      "id": "2954f881-12c5-4cfd-8ac7-86875b55fb1f",
       "name": "TelegramToken",
       "credentials": {
         "postgres": {
-          "id": "tJk4TZtu62G05Qy6",
+          "id": "iLFBj4TmTHLyxhnt",
           "name": "Postgres account"
         }
       }
@@ -663,7 +663,7 @@
         128,
         352
       ],
-      "id": "628ca0c9-0984-423c-b20e-43e7e46f5502",
+      "id": "bd11fb4c-d7f9-4499-b7e4-d9dafeca065b",
       "name": "Code in JavaScript"
     },
     {
@@ -696,13 +696,13 @@
         240,
         352
       ],
-      "id": "4780d905-623e-43a3-af1e-a5ea9fa3cc4d",
+      "id": "2081bee6-345b-4b9a-babe-055e7bb20895",
       "name": "IfUpdateMCCInputValid"
     },
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "WITH input AS (\n    SELECT\n      {{ $json.transaction_id || 0 }}::BIGINT AS tx_id,\n      CASE\n        WHEN '{{ $json.mcc_code || '' }}' = '' THEN NULL\n        ELSE LPAD('{{ $json.mcc_code || '' }}', 4, '0')\n      END::TEXT AS requested_mcc\n),\nmcc_meta AS (\n    SELECT\n      i.tx_id,\n      i.requested_mcc AS mcc_code,\n      COALESCE(\n        NULLIF(m.edited_description, ''),\n        NULLIF(m.combined_description, ''),\n        NULLIF(m.usda_description, ''),\n        NULLIF(m.irs_description, ''),\n        'Manual MCC Update'\n      ) AS mcc_description\n    FROM input i\n    LEFT JOIN mcc_reference m ON m.mcc = i.requested_mcc\n),\ntarget_tx AS (\n    SELECT\n      t.id,\n      t.merchant_id,\n      t.merchant,\n      trim(regexp_replace(replace(upper(COALESCE(t.merchant, '')), ' ', ''), '[^A-Z0-9]', '', 'g')) AS merchant_normalized\n    FROM transactions t\n    JOIN input i ON i.tx_id = t.id\n),\nupdate_existing_cache AS (\n    UPDATE merchant_mcc_cache c\n    SET\n      mcc_code = mm.mcc_code,\n      mcc_description = mm.mcc_description,\n      category = mm.mcc_description,\n      manual_override = TRUE,\n      updated_at = NOW()\n    FROM target_tx tt\n    CROSS JOIN mcc_meta mm\n    WHERE c.id = tt.merchant_id\n      AND mm.mcc_code IS NOT NULL\n    RETURNING c.id, c.mcc_code, c.mcc_description, c.category\n),\nupsert_missing_cache AS (\n    INSERT INTO merchant_mcc_cache (\n      merchant_normalized,\n      merchant_original,\n      mcc_code,\n      mcc_description,\n      category,\n      manual_override,\n      updated_at\n    )\n    SELECT\n      COALESCE(NULLIF(tt.merchant_normalized, ''), 'TX-' || tt.id::TEXT),\n      tt.merchant,\n      mm.mcc_code,\n      mm.mcc_description,\n      mm.mcc_description,\n      TRUE,\n      NOW()\n    FROM target_tx tt\n    CROSS JOIN mcc_meta mm\n    WHERE tt.merchant_id IS NULL\n      AND mm.mcc_code IS NOT NULL\n    ON CONFLICT (merchant_normalized) DO UPDATE\n    SET\n      merchant_original = EXCLUDED.merchant_original,\n      mcc_code = EXCLUDED.mcc_code,\n      mcc_description = EXCLUDED.mcc_description,\n      category = EXCLUDED.category,\n      manual_override = TRUE,\n      updated_at = NOW()\n    RETURNING id, mcc_code, mcc_description, category\n),\nresolved_cache AS (\n    SELECT id, mcc_code, mcc_description, category FROM update_existing_cache\n    UNION ALL\n    SELECT id, mcc_code, mcc_description, category FROM upsert_missing_cache\n),\nupdate_tx AS (\n    UPDATE transactions t\n    SET\n      merchant_id = rc.id,\n      mcc_code = rc.mcc_code,\n      category = COALESCE(rc.category, rc.mcc_description)\n    FROM resolved_cache rc\n    WHERE t.id = (SELECT tx_id FROM input)\n    RETURNING t.id AS transaction_id, t.merchant_id, t.mcc_code, t.category\n),\nstatus_calc AS (\n    SELECT\n      i.tx_id AS transaction_id,\n      i.requested_mcc AS requested_mcc,\n      COALESCE((SELECT ut.mcc_code FROM update_tx ut LIMIT 1), i.requested_mcc) AS mcc_code,\n      COALESCE((SELECT ut.category FROM update_tx ut LIMIT 1), (SELECT mm.mcc_description FROM mcc_meta mm LIMIT 1)) AS category,\n      CASE\n        WHEN i.requested_mcc IS NULL THEN 'invalid_mcc'\n        WHEN EXISTS (SELECT 1 FROM update_tx) THEN 'updated'\n        WHEN EXISTS (SELECT 1 FROM target_tx) THEN 'no_cache_updated'\n        ELSE 'transaction_not_found'\n      END AS status\n    FROM input i\n)\nSELECT\n  s.status,\n  s.transaction_id,\n  s.requested_mcc,\n  s.mcc_code,\n  s.category,\n  a.bank,\n  a.identifier,\n  t.merchant,\n  t.currency,\n  t.amount,\n  t.transaction_timestamp\nFROM status_calc s\nLEFT JOIN transactions t ON t.id = s.transaction_id\nLEFT JOIN accounts a ON a.id = t.account_id;",
+        "query": "WITH input AS (\n    SELECT\n      {{ $json.transaction_id || 0 }}::BIGINT AS tx_id,\n      CASE\n        WHEN '{{ $json.mcc_code || '' }}' = '' THEN NULL\n        ELSE LPAD('{{ $json.mcc_code || '' }}', 4, '0')\n      END::TEXT AS requested_mcc\n),\nmcc_meta AS (\n    SELECT\n      i.tx_id,\n      i.requested_mcc AS mcc_code,\n      COALESCE(\n        NULLIF(m.edited_description, ''),\n        NULLIF(m.combined_description, ''),\n        NULLIF(m.usda_description, ''),\n        NULLIF(m.irs_description, ''),\n        'Manual MCC Update'\n      ) AS mcc_description\n    FROM input i\n    LEFT JOIN mcc_reference m ON m.mcc = i.requested_mcc\n),\ntarget_tx AS (\n    SELECT\n      t.id,\n      t.merchant_id,\n      t.merchant,\n      trim(regexp_replace(replace(upper(COALESCE(t.merchant, '')), ' ', ''), '[^A-Z0-9]', '', 'g')) AS merchant_normalized\n    FROM transactions t\n    JOIN input i ON i.tx_id = t.id\n),\nupdate_existing_cache AS (\n    UPDATE merchant_mcc_cache c\n    SET\n      mcc_code = mm.mcc_code,\n      mcc_description = mm.mcc_description,\n      category = mm.mcc_description,\n      manual_override = TRUE,\n      updated_at = NOW()\n    FROM target_tx tt\n    CROSS JOIN mcc_meta mm\n    WHERE c.id = tt.merchant_id\n      AND mm.mcc_code IS NOT NULL\n    RETURNING c.id, c.mcc_code, c.mcc_description, c.category\n),\nupsert_missing_cache AS (\n    INSERT INTO merchant_mcc_cache (\n      merchant_normalized,\n      merchant_original,\n      mcc_code,\n      mcc_description,\n      category,\n      manual_override,\n      updated_at\n    )\n    SELECT\n      COALESCE(NULLIF(tt.merchant_normalized, ''), 'TX-' || tt.id::TEXT),\n      tt.merchant,\n      mm.mcc_code,\n      mm.mcc_description,\n      mm.mcc_description,\n      TRUE,\n      NOW()\n    FROM target_tx tt\n    CROSS JOIN mcc_meta mm\n    WHERE tt.merchant_id IS NULL\n      AND mm.mcc_code IS NOT NULL\n    ON CONFLICT (merchant_normalized) DO UPDATE\n    SET\n      merchant_original = EXCLUDED.merchant_original,\n      mcc_code = EXCLUDED.mcc_code,\n      mcc_description = EXCLUDED.mcc_description,\n      category = EXCLUDED.category,\n      manual_override = TRUE,\n      updated_at = NOW()\n    RETURNING id, mcc_code, mcc_description, category\n),\nresolved_cache AS (\n    SELECT id, mcc_code, mcc_description, category FROM update_existing_cache\n    UNION ALL\n    SELECT id, mcc_code, mcc_description, category FROM upsert_missing_cache\n),\nupdate_tx AS (\n    UPDATE transactions t\n    SET\n      merchant_id = rc.id,\n      mcc_code = rc.mcc_code,\n      category = COALESCE(rc.category, rc.mcc_description)\n    FROM resolved_cache rc\n    WHERE t.id = (SELECT tx_id FROM input)\n    RETURNING t.id AS transaction_id, t.merchant_id, t.mcc_code, t.category\n),\nstatus_calc AS (\n    SELECT\n      i.tx_id AS transaction_id,\n      i.requested_mcc AS requested_mcc,\n      COALESCE((SELECT ut.mcc_code FROM update_tx ut LIMIT 1), i.requested_mcc) AS mcc_code,\n      COALESCE((SELECT ut.category FROM update_tx ut LIMIT 1), (SELECT mm.mcc_description FROM mcc_meta mm LIMIT 1)) AS category,\n      CASE\n        WHEN i.requested_mcc IS NULL THEN 'invalid_mcc'\n        WHEN EXISTS (SELECT 1 FROM update_tx) THEN 'updated'\n        WHEN EXISTS (SELECT 1 FROM target_tx) THEN 'no_cache_updated'\n        ELSE 'transaction_not_found'\n      END AS status\n    FROM input i\n)\nSELECT\n  s.status,\n  s.transaction_id,\n  s.requested_mcc,\n  s.mcc_code,\n  s.category,\n  a.bank,\n  a.identifier,\n  a.card_alias,\n  t.merchant,\n  t.currency,\n  t.amount,\n  t.transaction_timestamp\nFROM status_calc s\nLEFT JOIN transactions t ON t.id = s.transaction_id\nLEFT JOIN accounts a ON a.id = t.account_id;",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -711,11 +711,11 @@
         352,
         352
       ],
-      "id": "8f1bbf17-96f2-4204-a990-42cb3070ecf6",
+      "id": "458a5cc9-0192-4f89-a94c-9e89d8f3e494",
       "name": "UpdateMCCInDB",
       "credentials": {
         "postgres": {
-          "id": "tJk4TZtu62G05Qy6",
+          "id": "iLFBj4TmTHLyxhnt",
           "name": "Postgres account"
         }
       }
@@ -750,13 +750,13 @@
         480,
         352
       ],
-      "id": "972f8188-3ab8-4d95-a841-ec976f946f9e",
+      "id": "0d866b19-d9c0-4326-b991-b190a5fb0a3b",
       "name": "IfUpdateSuccess"
     },
     {
       "parameters": {
         "chatId": "={{ $('TelegramToken').item.json.group_id }}",
-        "text": "=Spend Card: {{ $json.bank }} {{ $json.identifier }}\nSpend Amount: {{ $json.currency }} {{ $json.amount }}\nMerchant: {{ $json.merchant.replace(/[*_`[~]/g, '\\$&') }}\nMCC: {{ $json.mcc_code }}\nCategory: {{ $json.category }}\nTime: {{ DateTime.fromISO($json.transaction_timestamp).setZone('Asia/Singapore').toFormat('yyyy-MM-dd HH:mm:ss') }}\nTransaction ID: {{ $json.transaction_id }}",
+        "text": "=Spend Card: {{ ($json.card_alias && $json.card_alias.trim() !== '') ? $json.card_alias : ($json.bank + ' ' + $json.identifier) }}\nSpend Amount: {{ $json.currency }} {{ $json.amount }}\nMerchant: {{ $json.merchant.replace(/[*_`[~]/g, '\\\\$&') }}\nMCC: {{ $json.mcc_code }}\nCategory: {{ $json.category }}\nTime: {{ DateTime.fromISO($json.transaction_timestamp).setZone('Asia/Singapore').toFormat('yyyy-MM-dd HH:mm:ss') }}\nTransaction ID: {{ $json.transaction_id }}",
         "replyMarkup": "inlineKeyboard",
         "inlineKeyboard": {
           "rows": [
@@ -784,7 +784,7 @@
         704,
         256
       ],
-      "id": "e0f4b90a-c48a-47a9-94ef-4c15f92dad23",
+      "id": "75877c22-06d0-4b27-8130-c56a5f367bff",
       "name": "Send Updated Transaction Details",
       "webhookId": "ef90e087-9748-4a04-bc60-6977bd2c8454",
       "credentials": {
@@ -808,7 +808,7 @@
         592,
         352
       ],
-      "id": "e51d4ef0-3f72-453f-9ec5-3e7d367ebfa0",
+      "id": "fe8c4489-58b4-438d-9f80-52b026664264",
       "name": "Send a text message2",
       "webhookId": "ef90e087-9748-4a04-bc60-6977bd2c8454",
       "credentials": {
@@ -832,7 +832,7 @@
         480,
         464
       ],
-      "id": "dcf9f1fc-cfd8-41b8-b9ad-91a5d0d93e0a",
+      "id": "383f5dab-660f-4754-ac99-3a48942a6008",
       "name": "SendInvalidUpdateMCCUsage",
       "webhookId": "ef90e087-9748-4a04-bc60-6977bd2c8454",
       "credentials": {
@@ -888,7 +888,7 @@
         816,
         352
       ],
-      "id": "ff8d0a27-52a9-43f2-bc07-3af9b4cb44b6",
+      "id": "741de94f-eda0-4115-ae81-dc2e367f6fa5",
       "name": "Update row(s)4"
     }
   ],
@@ -1168,11 +1168,11 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "eae70329-815c-46aa-9581-673de4dae062",
+  "versionId": "1ae17071-5c73-4b22-b33c-0cf3d15cd354",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "cb0912f123cfee09b97b438e627cddf4a1a902bdc3af1e91d013d2ed0445c724"
+    "instanceId": "21cbf5f4b074cb6076d705cc4435b7218d2a874f1e8dfc22b2b66cc7c2ba0c86"
   },
-  "id": "telegramquery",
+  "id": "4h5C4bg2rgsjhpjR",
   "tags": []
 }

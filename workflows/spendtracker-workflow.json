@@ -13,9 +13,9 @@
       "typeVersion": 2.1,
       "position": [
         -608,
-        224
+        416
       ],
-      "id": "5f6f1eba-a56e-4ffd-8902-973015f46298",
+      "id": "b1c9162b-317e-44c8-9c95-96f56237c496",
       "name": "Email Trigger (IMAP)",
       "credentials": {
         "imap": {
@@ -27,7 +27,7 @@
     {
       "parameters": {
         "chatId": "={{ $('GetTelegram').item.json.group_id }}",
-        "text": "=Spend Card: {{ $('CreateTransactionEntry').item.json.bank }} {{ $('CreateTransactionEntry').item.json.identifier }}\nSpend Amount: {{ $json.currency }} {{ $json.amount }}\nMerchant: {{ $json.merchant }}\nMCC: {{ $json.mcc_code }}\nCategory: {{ $json.category }}\nTime: {{ $('CreateTransactionEntry').item.json.time }}\nTransaction ID: {{ $json.id }}",
+        "text": "=Spend Card: {{ $('GetAccount').item.json.card_alias || ($('CreateTransactionEntry').item.json.bank + ' ' + $('CreateTransactionEntry').item.json.identifier) }}\nSpend Amount: {{ $json.currency }} {{ $json.amount }}\nMerchant: {{ $json.merchant }}\nMCC: {{ $json.mcc_code }}\nCategory: {{ $json.category }}\nTime: {{ $('CreateTransactionEntry').item.json.time }}\nTransaction ID: {{ $json.id }}",
         "replyMarkup": "inlineKeyboard",
         "inlineKeyboard": {
           "rows": [
@@ -53,9 +53,9 @@
       "typeVersion": 1.2,
       "position": [
         3648,
-        384
+        576
       ],
-      "id": "87cd6370-63c7-4533-b475-173cd84bbe39",
+      "id": "6ef460b7-0826-4a9d-b7c2-f9e018fb74ec",
       "name": "Send a text message",
       "webhookId": "1ae86153-0057-4c83-9e48-54be031f2608",
       "credentials": {
@@ -75,9 +75,9 @@
       "typeVersion": 2.6,
       "position": [
         848,
-        48
+        240
       ],
-      "id": "e6ec49a7-eba2-4bfb-b5ae-251bc449f93b",
+      "id": "4c54a7ab-a846-4869-8895-b649a41c2345",
       "name": "CreateAccountIfNotExists",
       "executeOnce": false,
       "alwaysOutputData": true,
@@ -98,9 +98,9 @@
       "typeVersion": 2.6,
       "position": [
         864,
-        304
+        496
       ],
-      "id": "e4e00a8b-f522-4b11-b689-57fb020e67f8",
+      "id": "2e4ffaec-300e-4ef2-9a7b-0791c7171f8f",
       "name": "GetMCCFromCache",
       "executeOnce": false,
       "alwaysOutputData": true,
@@ -150,9 +150,9 @@
       "typeVersion": 2.3,
       "position": [
         1472,
-        272
+        464
       ],
-      "id": "798bd4d7-eafe-47dd-9d75-ce4b1901de18",
+      "id": "1cd4c73a-b2bb-4f60-a467-25520dd76fbd",
       "name": "IfCached"
     },
     {
@@ -164,9 +164,9 @@
       "typeVersion": 4.4,
       "position": [
         1824,
-        512
+        704
       ],
-      "id": "29b5307b-3747-4618-a45d-81f935dfee83",
+      "id": "ff5cf15a-bcac-4e60-ad3f-05ab2f8f5e14",
       "name": "GetMCCFromAPI",
       "alwaysOutputData": true
     },
@@ -180,9 +180,9 @@
       "typeVersion": 2.6,
       "position": [
         2144,
-        512
+        704
       ],
-      "id": "93663828-7fa4-472a-ab45-6a4edb0b9d4a",
+      "id": "c7e9c269-1054-43ef-b6b0-45ff2728fb7b",
       "name": "CreateCacheFromAPI",
       "credentials": {
         "postgres": {
@@ -227,9 +227,9 @@
       "typeVersion": 3.4,
       "position": [
         1632,
-        144
+        336
       ],
-      "id": "8bf8fc4d-d3fe-4c84-9ef7-3e6d21038cd5",
+      "id": "4b8f8f5d-5cf9-4bae-96eb-b44598157389",
       "name": "UseExactCache"
     },
     {
@@ -271,9 +271,9 @@
       "typeVersion": 2.3,
       "position": [
         1632,
-        304
+        496
       ],
-      "id": "d71e0aeb-1c53-4388-a057-638a0e08f92d",
+      "id": "05182adc-95bc-4a31-ae6f-3d5984179f35",
       "name": "IfSimilar"
     },
     {
@@ -286,9 +286,9 @@
       "typeVersion": 2.6,
       "position": [
         1856,
-        304
+        496
       ],
-      "id": "36d80d0a-df23-4477-99df-13f8f435cfe6",
+      "id": "5ab8c5d5-0716-4989-856b-a113b0e67d7c",
       "name": "CreateCacheFromSimilar",
       "credentials": {
         "postgres": {
@@ -363,9 +363,9 @@
       "typeVersion": 3.4,
       "position": [
         2448,
-        384
+        576
       ],
-      "id": "03cf5646-56f5-4d74-ab60-0134a26e9474",
+      "id": "631a6a5c-e121-4b1b-94a8-60fad783a862",
       "name": "CreateTransactionEntry"
     },
     {
@@ -377,9 +377,9 @@
       "typeVersion": 4.4,
       "position": [
         2688,
-        384
+        576
       ],
-      "id": "39173269-b8e3-4544-b004-431c5690aae9",
+      "id": "ef3342b8-37c6-461b-9eab-89a97d582af4",
       "name": "GetConversionRates",
       "continueOnFail": true
     },
@@ -391,24 +391,24 @@
       "typeVersion": 2,
       "position": [
         2928,
-        384
+        576
       ],
-      "id": "291a268a-2754-486c-91d9-5361d525d59f",
+      "id": "1b6ac36d-bdf6-4356-bde5-2c305190488d",
       "name": "ConvertCurrencyIfNeeded"
     },
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT id FROM accounts WHERE identifier = '{{ $json.identifier }}' AND bank = '{{ $json.bank }}';",
+        "query": "SELECT id, card_alias FROM accounts WHERE identifier = '{{ $json.identifier }}' AND bank = '{{ $json.bank }}';",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
         3184,
-        384
+        576
       ],
-      "id": "a729f343-b0df-4191-b4cd-8b46839327e9",
+      "id": "afe53e79-dd44-4507-9255-94cde1c766b5",
       "name": "GetAccount",
       "executeOnce": false,
       "alwaysOutputData": true,
@@ -429,9 +429,9 @@
       "typeVersion": 2.6,
       "position": [
         3424,
-        384
+        576
       ],
-      "id": "e93a1632-7ccf-4389-8af8-26ae7225ba90",
+      "id": "d1f5fe92-28f4-4881-b22d-ef806f07d801",
       "name": "CreateTransaction",
       "credentials": {
         "postgres": {
@@ -448,9 +448,9 @@
       "typeVersion": 2,
       "position": [
         0,
-        224
+        416
       ],
-      "id": "2947a5ea-1e0f-4ff3-a781-5a779dc30525",
+      "id": "eed23df0-5e67-4b9b-be12-6bd3d789e05d",
       "name": "MaribankParser"
     },
     {
@@ -484,9 +484,9 @@
       "typeVersion": 1.2,
       "position": [
         -32,
-        480
+        672
       ],
-      "id": "a6d4cf32-7248-4b34-83db-53028678d8ca",
+      "id": "bc5bd559-7abc-48bb-9cba-adc2652b4c91",
       "name": "paylah_html_parser"
     },
     {
@@ -497,9 +497,9 @@
       "typeVersion": 3.2,
       "position": [
         480,
-        256
+        448
       ],
-      "id": "709e27b0-99b0-47f9-a76c-b7ed00976d0c",
+      "id": "c818e743-f0f0-4db0-8ccb-04268fc6a3eb",
       "name": "Merge"
     },
     {
@@ -558,9 +558,9 @@
       "typeVersion": 3.4,
       "position": [
         -416,
-        544
+        736
       ],
-      "id": "fa373126-8169-4311-83a2-c9c5452ff017",
+      "id": "82e23437-7d19-4018-b587-54993e32904a",
       "name": "Switch"
     },
     {
@@ -571,9 +571,9 @@
       "typeVersion": 2,
       "position": [
         32,
-        672
+        864
       ],
-      "id": "142b66cd-a64e-4e5b-8a15-f58e4135286e",
+      "id": "0bc1bb5b-462e-44a6-882e-d1930d7d9477",
       "name": "Code in JavaScript"
     },
     {
@@ -586,9 +586,9 @@
       "typeVersion": 3,
       "position": [
         656,
-        256
+        448
       ],
-      "id": "cd1c3d0c-cebf-4af6-a90e-7b53198f48b0",
+      "id": "d5a9d3f0-ed46-45c1-80d1-8dca603e1718",
       "name": "Loop Over Items"
     },
     {
@@ -597,9 +597,9 @@
       "typeVersion": 3.2,
       "position": [
         208,
-        528
+        720
       ],
-      "id": "13f69cb0-c61b-4c3c-b6fe-40e673de8523",
+      "id": "6dcb7e03-5114-431d-9e58-dece3080a366",
       "name": "Merge1"
     },
     {
@@ -610,9 +610,9 @@
       "typeVersion": 2,
       "position": [
         0,
-        0
+        192
       ],
-      "id": "61fdd2ad-964e-4a07-93f6-737029945d85",
+      "id": "f352b1e4-2b12-4a90-b580-5e9cb1f77859",
       "name": "UobParser"
     },
     {
@@ -625,9 +625,9 @@
       "typeVersion": 2.6,
       "position": [
         1296,
-        272
+        464
       ],
-      "id": "49e4ce9d-5b23-4b75-88ff-621def6422b8",
+      "id": "0d20d54a-2ab5-48d0-83d3-2f7accf05089",
       "name": "GetTelegram",
       "executeOnce": false,
       "alwaysOutputData": true,
@@ -648,9 +648,9 @@
       "typeVersion": 2.6,
       "position": [
         1072,
-        304
+        496
       ],
-      "id": "f153dec5-23bd-4f61-b307-b55c85f29dae",
+      "id": "e035b13f-0df8-4323-b09a-2b6543efd098",
       "name": "GetFromMCCSim",
       "alwaysOutputData": true,
       "credentials": {
@@ -679,9 +679,9 @@
       "typeVersion": 1.2,
       "position": [
         -160,
-        672
+        864
       ],
-      "id": "d3e4e599-7f71-4adc-a2c6-98e9f6173059",
+      "id": "d578ebe5-dc47-4c4c-8361-b0352f3189d8",
       "name": "dbs_card_html_parser"
     },
     {
@@ -692,23 +692,23 @@
       "typeVersion": 2,
       "position": [
         368,
-        528
+        720
       ],
-      "id": "cfa42581-390e-4e12-b161-4da35bbb4c5a",
+      "id": "0c8fdb0a-699c-4d44-925d-164c7606953a",
       "name": "DbsParser"
     },
     {
       "parameters": {
         "mode": "runOnceForEachItem",
-        "jsCode": "let text = $input.item.json.textHtml || \"\";\n\n// Early guard: ensure this looks like a Citibank notification and has content\nif (!text || !/citibank/i.test(text)) {\n  return {};\n}\n\nconst dateMatch = text.match(/Transaction date:\\s*(\\d{2}\\/\\d{2}\\/\\d{2})/i);\nconst timeMatch = text.match(/Transaction\\s*time:\\s*([0-9:]+)/i);\nconst merchantMatch = text.match(/Transaction\\s+details\\s*:\\s*(.*?)\\s+Singapore\\s+SGP/i);\nconst amountMatch = text.match(/Transaction amount:\\s*([A-Z]{3})([\\d,]+\\.\\d{2})/i);\nconst cardMatch = text.match(/Account number:\\s*(?:X{4}-){3}(\\d{4})/i);\n\n// If required fields are missing, do not emit a transaction\nif (!dateMatch || !amountMatch) {\n  return [];\n}\n\nconst merchant = merchantMatch?.[1]?.trim();\nconst currency = amountMatch ? amountMatch[1] : null;\nconst amount = amountMatch ? parseFloat(amountMatch[2].replace(/,/g, \"\")) : null;\nconst cardEnding = cardMatch ? cardMatch[1] : null;\n\nlet transactionISO = null;\nif (dateMatch) {\n  const parts = dateMatch[1].split('/');\n  const year = \"20\" + parts[2];\n  const month = parts[1];\n  const day = parts[0];\n\n  const time = timeMatch ? timeMatch[1] : \"12:00:00\";\n\n  transactionISO = new Date(`${year}-${month}-${day}T${time}+08:00`).toISOString();\n}\n\nfunction normalizeMerchant(name) {\n  return name.toUpperCase().replace(/[^A-Z0-9]/g, \"\").trim();\n}\n\nreturn {\n   bank: \"Citibank\",\n   merchant,\n   currency,\n   amount,\n   time: transactionISO,\n   identifier: cardEnding,\n   normalize_merchant: normalizeMerchant(merchant || \"\")\n};\n"
+        "jsCode": "let text = $input.item.json.textHtml || \"\";\n\n// Early guard: ensure this looks like a Citibank notification and has content\nif (!text || !/citibank/i.test(text)) {\n  return {};\n}\n\nconst dateMatch = text.match(/Transaction date:\\s*(\\d{2}\\/\\d{2}\\/\\d{2})/i);\nconst timeMatch = text.match(/Transaction\\s*time:\\s*([0-9:]+)/i);\nconst merchantMatch = text.match(/Transaction\\s+details\\s*:\\s*(.*?)\\s+Singapore\\s+SGP/i);\nconst amountMatch = text.match(/Transaction amount:\\s*([A-Z]{3})([\\d,]+\\.\\d{2})/i);\nconst cardMatch = text.match(/Account number:\\s*(?:X{4}-){3}(\\d{4})/i);\n\n// If required fields are missing, do not emit a transaction\nif (!dateMatch || !amountMatch) {\n  return [];\n}\n\nconst merchant = merchantMatch?.[1]?.trim();\nconst currency = amountMatch ? amountMatch[1] : null;\nconst amount = amountMatch ? parseFloat(amountMatch[2].replace(/,/g, \"\")) : null;\nconst cardEnding = cardMatch ? cardMatch[1] : null;\n\nlet transactionISO = null;\nif (dateMatch) {\n  const parts = dateMatch[1].split('/');\n  const year = \"20\" + parts[2];\n  const month = parts[1];\n  const day = parts[0];\n\n  const time = timeMatch ? timeMatch[1] : \"12:00:00\";\n\n  transactionISO = new Date(`${year}-${month}-${day}T${time}+08:00`).toISOString();\n}\n\nfunction normalizeMerchant(name) {\n  return name.toUpperCase().replace(/[^A-Z0-9]/g, \"\").trim();\n}\n\nreturn {\n  bank: \"Citibank\",\n  merchant,\n  currency,\n  amount,\n  time: transactionISO,\n  identifier: cardEnding,\n  normalize_merchant: normalizeMerchant(merchant || \"\")\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
         0,
-        -192
+        0
       ],
-      "id": "781b353c-fd08-4066-b10e-d81d7cffbfe0",
+      "id": "bb727be4-3fc5-4ce8-8971-e0fab42325be",
       "name": "CitibankParser"
     }
   ],
@@ -1054,11 +1054,10 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "7bced175-1505-44ed-a27c-39acb329e5aa",
+  "versionId": "2f281f66-f720-472f-abe8-f9e0c531f8d3",
   "meta": {
-    "templateCredsSetupCompleted": true,
     "instanceId": "21cbf5f4b074cb6076d705cc4435b7218d2a874f1e8dfc22b2b66cc7c2ba0c86"
   },
-  "id": "spendtracker",
+  "id": "Q9C0dkKbrEDEnqc2",
   "tags": []
 }

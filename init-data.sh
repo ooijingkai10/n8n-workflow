@@ -44,6 +44,7 @@ if [ -n "${POSTGRES_NON_ROOT_USER:-}" ] && [ -n "${POSTGRES_NON_ROOT_PASSWORD:-}
       id BIGSERIAL PRIMARY KEY,
       bank TEXT NOT NULL,        -- "Mari CC", "DBS PayLah"
       identifier TEXT,                   -- last4 (4040) or phone/email
+      card_alias TEXT,
       created_at TIMESTAMPTZ DEFAULT NOW(),
       UNIQUE(bank, identifier)             -- prevent duplicates
     );
