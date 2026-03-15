@@ -27,7 +27,7 @@
     {
       "parameters": {
         "chatId": "={{ $('GetTelegram').item.json.group_id }}",
-        "text": "=Spend Card: {{ $('GetAccount').item.json.card_alias || ($('CreateTransactionEntry').item.json.bank + ' ' + $('CreateTransactionEntry').item.json.identifier) }}\nSpend Amount: {{ $json.currency }} {{ $json.amount }}\nMerchant: {{ $json.merchant }}\nMCC: {{ $json.mcc_code }}\nCategory: {{ $json.category }}\nTime: {{ $('CreateTransactionEntry').item.json.time }}\nTransaction ID: {{ $json.id }}",
+        "text": "=Spend Card: {{ $('GetAccount').item.json.card_alias || ($('CreateTransactionEntry').item.json.bank + ' ' + $('CreateTransactionEntry').item.json.identifier) }}\nSpend Amount: {{ $json.currency }} {{ $json.amount }}\nMerchant: {{ $json.merchant }}\nMCC: {{ $json.mcc_code }}\nCategory: {{ $json.category }}\nTime: {{ $('CreateTransactionEntry').item.json.time.toDateTime().setZone('Singapore').format('yyyy-MM-dd HH:mm:ss') }}\nTransaction ID: {{ $json.id }}",
         "replyMarkup": "inlineKeyboard",
         "inlineKeyboard": {
           "rows": [
@@ -352,7 +352,7 @@
             {
               "id": "d5bfae9c-59a4-42f9-b955-b28a905d34e2",
               "name": "time",
-              "value": "={{ $('Loop Over Items').item.json.time.toDateTime().setZone('Singapore').format('yyyy-MM-dd hh:mm:ss') }}",
+              "value": "={{ $('Loop Over Items').item.json.time }}",
               "type": "string"
             }
           ]
@@ -699,8 +699,7 @@
     },
     {
       "parameters": {
-        "mode": "runOnceForEachItem",
-        "jsCode": "let text = $input.item.json.textHtml || \"\";\n\n// Early guard: ensure this looks like a Citibank notification and has content\nif (!text || !/citibank/i.test(text)) {\n  return {};\n}\n\nconst dateMatch = text.match(/Transaction date:\\s*(\\d{2}\\/\\d{2}\\/\\d{2})/i);\nconst timeMatch = text.match(/Transaction\\s*time:\\s*([0-9:]+)/i);\nconst merchantMatch = text.match(/Transaction\\s+details\\s*:\\s*(.*?)\\s+Singapore\\s+SGP/i);\nconst amountMatch = text.match(/Transaction amount:\\s*([A-Z]{3})([\\d,]+\\.\\d{2})/i);\nconst cardMatch = text.match(/Account number:\\s*(?:X{4}-){3}(\\d{4})/i);\n\n// If required fields are missing, do not emit a transaction\nif (!dateMatch || !amountMatch) {\n  return [];\n}\n\nconst merchant = merchantMatch?.[1]?.trim();\nconst currency = amountMatch ? amountMatch[1] : null;\nconst amount = amountMatch ? parseFloat(amountMatch[2].replace(/,/g, \"\")) : null;\nconst cardEnding = cardMatch ? cardMatch[1] : null;\n\nlet transactionISO = null;\nif (dateMatch) {\n  const parts = dateMatch[1].split('/');\n  const year = \"20\" + parts[2];\n  const month = parts[1];\n  const day = parts[0];\n\n  const time = timeMatch ? timeMatch[1] : \"12:00:00\";\n\n  transactionISO = new Date(`${year}-${month}-${day}T${time}+08:00`).toISOString();\n}\n\nfunction normalizeMerchant(name) {\n  return name.toUpperCase().replace(/[^A-Z0-9]/g, \"\").trim();\n}\n\nreturn {\n  bank: \"Citibank\",\n  merchant,\n  currency,\n  amount,\n  time: transactionISO,\n  identifier: cardEnding,\n  normalize_merchant: normalizeMerchant(merchant || \"\")\n};"
+        "jsCode": "let result = []\n// Early guard: ensure this looks like a Citibank notification and has content\n\nfor (const item of $input.all()) {\n  const plainText = item.json.textPlain;\n\n  if (plainText && plainText.toLowerCase().includes(\"citibank\")) {\n    extractCiti(plainText);\n  }\n}\n\n\nfunction extractCiti(text) {\n    \n  const dateMatch = text.match(/Transaction date:\\s*(\\d{2}\\/\\d{2}\\/\\d{2})/i);\n  const timeMatch = text.match(/Transaction\\s*time:\\s*([0-9:]+)/i);\n  const merchantMatch = text.match(/Transaction\\s+details\\s*:\\s*(.*?)\\s+Singapore\\s+SGP/i);\n  const amountMatch = text.match(/Transaction amount:\\s*([A-Z]{3})([\\d,]+\\.\\d{2})/i);\n  const cardMatch = text.match(/Account number:\\s*(?:X{4}-){3}(\\d{4})/i);\n  \n  // If required fields are missing, do not emit a transaction\n  if (!dateMatch || !amountMatch) {\n    return [];\n  }\n  \n  const merchant = merchantMatch?.[1]?.trim();\n  const currency = amountMatch ? amountMatch[1] : null;\n  const amount = amountMatch ? parseFloat(amountMatch[2].replace(/,/g, \"\")) : null;\n  const cardEnding = cardMatch ? cardMatch[1] : null;\n  \n  let transactionISO = null;\n  if (dateMatch) {\n    const parts = dateMatch[1].split('/');\n    const year = \"20\" + parts[2];\n    const month = parts[1];\n    const day = parts[0];\n  \n    const time = timeMatch ? timeMatch[1] : \"12:00:00\";\n  \n    transactionISO = new Date(`${year}-${month}-${day}T${time}+08:00`).toISOString();\n  }\n  result.push({\n    bank: \"Citibank\",\n    merchant,\n    currency,\n    amount,\n    time: transactionISO,\n    identifier: cardEnding,\n    normalize_merchant: normalizeMerchant(merchant || \"\")\n  })\n}\n\n\nfunction normalizeMerchant(name) {\n  return name.toUpperCase().replace(/[^A-Z0-9]/g, \"\").trim();\n}\n\nreturn result;"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -1048,15 +1047,15 @@
       ]
     }
   },
-  "active": true,
+  "active": false,
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "2f281f66-f720-472f-abe8-f9e0c531f8d3",
+  "versionId": "addc368e-b3e6-4fc6-aa59-501c87f1c2b2",
   "meta": {
-    "instanceId": "21cbf5f4b074cb6076d705cc4435b7218d2a874f1e8dfc22b2b66cc7c2ba0c86"
+    "instanceId": "4a182fdf0355076d80301db7fdcfd4c6b398b3f59e2a9815842149ecafd4d570"
   },
   "id": "spendtracker",
   "tags": []
