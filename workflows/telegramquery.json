@@ -274,7 +274,7 @@
       "name": "Execute a SQL query",
       "credentials": {
         "postgres": {
-          "id": "iLFBj4TmTHLyxhnt",
+          "id": "tJk4TZtu62G05Qy6",
           "name": "Postgres account"
         }
       }
@@ -369,7 +369,7 @@
       "name": "Execute a SQL query1",
       "credentials": {
         "postgres": {
-          "id": "iLFBj4TmTHLyxhnt",
+          "id": "tJk4TZtu62G05Qy6",
           "name": "Postgres account"
         }
       }
@@ -647,7 +647,7 @@
       "name": "TelegramToken",
       "credentials": {
         "postgres": {
-          "id": "iLFBj4TmTHLyxhnt",
+          "id": "tJk4TZtu62G05Qy6",
           "name": "Postgres account"
         }
       }
@@ -715,7 +715,7 @@
       "name": "UpdateMCCInDB",
       "credentials": {
         "postgres": {
-          "id": "iLFBj4TmTHLyxhnt",
+          "id": "tJk4TZtu62G05Qy6",
           "name": "Postgres account"
         }
       }
