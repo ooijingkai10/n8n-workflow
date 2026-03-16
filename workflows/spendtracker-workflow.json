@@ -3,9 +3,9 @@
   "nodes": [
     {
       "parameters": {
-        "mailbox": "spendingstest",
+        "mailbox": "spendings",
         "options": {
-          "customEmailConfig": "=[\"ALL\"]",
+          "customEmailConfig": "=[\"UNSEEN\"]",
           "forceReconnect": 30
         }
       },
