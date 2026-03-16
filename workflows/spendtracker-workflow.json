@@ -3,9 +3,9 @@
   "nodes": [
     {
       "parameters": {
-        "mailbox": "spendings",
+        "mailbox": "spendingstest",
         "options": {
-          "customEmailConfig": "=[\"UNSEEN\"]",
+          "customEmailConfig": "=[\"ALL\"]",
           "forceReconnect": 30
         }
       },
@@ -491,7 +491,7 @@
     },
     {
       "parameters": {
-        "numberInputs": 4
+        "numberInputs": 5
       },
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
@@ -709,6 +709,76 @@
       ],
       "id": "bb727be4-3fc5-4ce8-8971-e0fab42325be",
       "name": "CitibankParser"
+    },
+    {
+      "parameters": {
+        "jsCode": "let result = []\n// Early guard: ensure this looks like a Citibank notification and has content\n\nfor (const item of $input.all()) {\n  const html = item.json.transaction_array;\n\n  extractHSBC(html);\n}\n\n\nfunction extractHSBC(text) {\n  \n  const cardEnding = text[0].split(\"-\")[3]\n  const date = text[1].replace('/', ' ')\n  const transactionISO = new Date(`${date} ${text[2]} GMT+08`).toISOString()\n  const [, currency, amount] = text[3].match(/^([A-Z]{3})(\\d+(?:\\.\\d+)?)$/);\n\n  const merchant = text[4]\n    \n  // const dateMatch = text.match(/Transaction date:\\s*(\\d{2}\\/\\d{2}\\/\\d{2})/i);\n  // const timeMatch = text.match(/Transaction\\s*time:\\s*([0-9:]+)/i);\n  // const merchantMatch = text.match(/Transaction\\s+details\\s*:\\s*(.*?)\\s+Singapore\\s+SGP/i);\n  // const amountMatch = text.match(/Transaction amount:\\s*([A-Z]{3})([\\d,]+\\.\\d{2})/i);\n  // const cardMatch = text.match(/Account number:\\s*(?:X{4}-){3}(\\d{4})/i);\n  \n  // // If required fields are missing, do not emit a transaction\n  // if (!dateMatch || !amountMatch) {\n  //   return [];\n  // }\n  \n  // const merchant = merchantMatch?.[1]?.trim();\n  // const currency = amountMatch ? amountMatch[1] : null;\n  // const amount = amountMatch ? parseFloat(amountMatch[2].replace(/,/g, \"\")) : null;\n  // const cardEnding = cardMatch ? cardMatch[1] : null;\n  \n  // let transactionISO = null;\n  // if (dateMatch) {\n  //   const parts = dateMatch[1].split('/');\n  //   const year = \"20\" + parts[2];\n  //   const month = parts[1];\n  //   const day = parts[0];\n  \n  //   const time = timeMatch ? timeMatch[1] : \"12:00:00\";\n  \n  //   transactionISO = new Date(`${year}-${month}-${day}T${time}+08:00`).toISOString();\n  // }\n  result.push({\n    bank: \"HSBC\",\n    merchant,\n    currency,\n    amount,\n    time: transactionISO,\n    identifier: cardEnding,\n    // normalize_merchant: normalizeMerchant(merchant || \"\")\n  })\n}\n\n\nfunction normalizeMerchant(name) {\n  return name.toUpperCase().replace(/[^A-Z0-9]/g, \"\").trim();\n}\n\nreturn result;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        -208
+      ],
+      "id": "cafcdcb5-7807-4bfd-b03e-2b12ec2d184e",
+      "name": "HSBCParser"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "dataPropertyName": "textHtml",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "transaction_array",
+              "cssSelector": "table table tbody tr td:nth-child(2)",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        -288,
+        -64
+      ],
+      "id": "67576d8f-ea32-4730-ba9f-efb8152980fa",
+      "name": "dbs_card_html_parser1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "2c98bcea-70e2-421c-96c7-cfdc82c7ab69",
+              "leftValue": "={{ $json.textHtml.toLowerCase() }}",
+              "rightValue": "hsbc",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -464,
+        160
+      ],
+      "id": "9625cff0-db23-4dcf-9d90-6849c75fbf1f",
+      "name": "If"
     }
   ],
   "pinData": {},
@@ -733,6 +803,11 @@
           },
           {
             "node": "CitibankParser",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If",
             "type": "main",
             "index": 0
           }
@@ -891,7 +966,7 @@
           {
             "node": "Merge",
             "type": "main",
-            "index": 2
+            "index": 3
           }
         ]
       ]
@@ -981,7 +1056,7 @@
           {
             "node": "Merge",
             "type": "main",
-            "index": 1
+            "index": 2
           }
         ]
       ]
@@ -1030,12 +1105,45 @@
           {
             "node": "Merge",
             "type": "main",
-            "index": 3
+            "index": 4
           }
         ]
       ]
     },
     "CitibankParser": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "dbs_card_html_parser1": {
+      "main": [
+        [
+          {
+            "node": "HSBCParser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "dbs_card_html_parser1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HSBCParser": {
       "main": [
         [
           {
@@ -1047,15 +1155,15 @@
       ]
     }
   },
-  "active": false,
+  "active": true,
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "addc368e-b3e6-4fc6-aa59-501c87f1c2b2",
+  "versionId": "cbd3c7df-bde4-4c22-9427-fa8ccb10ede2",
   "meta": {
-    "instanceId": "4a182fdf0355076d80301db7fdcfd4c6b398b3f59e2a9815842149ecafd4d570"
+    "instanceId": "f91e94c7277e6c12bb29a8ff2e630a146cb07f7f80eead8880254d1f65556c31"
   },
   "id": "spendtracker",
   "tags": []
