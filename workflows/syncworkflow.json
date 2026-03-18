@@ -1,0 +1,281 @@
+{
+  "name": "SyncWorkflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "81a9e050-7de6-4691-ba7c-f3fdac8a7c4d",
+      "name": "When clicking Execute workflow"
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:5678/api/v1/workflows?name=SpendTracker",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "c1de60a5-1b77-4389-a62b-9dac6febcbff",
+      "name": "LocalWorkflowSpendTracker",
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "9iRo7o4wsQzi0IwK",
+          "name": "Custom Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://raw.githubusercontent.com/spend-tracker-app/n8n-workflow/refs/heads/main/workflows/spendtracker-workflow.json",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        416,
+        0
+      ],
+      "id": "8469bb2f-72d8-43d6-a2a3-eb12d3f65081",
+      "name": "RemoteWorkflowSpendTracker"
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:5678/api/v1/workflows?name=TelegramQuery",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        208,
+        192
+      ],
+      "id": "776a2be7-6b71-4183-8208-ed3df126a044",
+      "name": "LocalWorkflowTelegramQuery",
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "9iRo7o4wsQzi0IwK",
+          "name": "Custom Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://raw.githubusercontent.com/spend-tracker-app/n8n-workflow/refs/heads/main/workflows/telegramquery.json",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        416,
+        192
+      ],
+      "id": "881a6f78-85a1-4262-9fd6-867af15e0c59",
+      "name": "RemoteWorkflowSpendTracker1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nlet data = []\nfor (const item of $input.all()) {\n  \n  if (JSON.stringify($(\"LocalWorkflowSpendTracker\").item.json.data[0].nodes) != JSON.stringify(JSON.parse(item.json.data)[\"nodes\"])) {\n    let d = JSON.parse(item.json.data)\n    delete d[\"active\"]\n    delete d[\"meta\"]\n    delete d[\"id\"]\n    delete d[\"tags\"]\n    delete d[\"versionId\"] \n    delete d[\"pinData\"]\n    d[\"settings\"] = {}\n    \n    const keys = Object.keys(d);\n    console.log(keys); \n    // console.log(d.keys())\n    \n    \n    data.push(d)\n  } else {\n    console.log(\"same\")\n  }\n}\n\nreturn data;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        624,
+        0
+      ],
+      "id": "cad2212c-4f7e-4948-8664-32cb2deb7cc8",
+      "name": "Diff"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nlet data = []\nfor (const item of $input.all()) {\n  \n  if (JSON.stringify($(\"LocalWorkflowTelegramQuery\").item.json.data[0].nodes) != JSON.stringify(JSON.parse(item.json.data)[\"nodes\"])) {\n    let d = JSON.parse(item.json.data)\n    delete d[\"active\"]\n    delete d[\"meta\"]\n    delete d[\"id\"]\n    delete d[\"tags\"]\n    delete d[\"versionId\"] \n    delete d[\"pinData\"]\n    d[\"settings\"] = {}\n    \n    const keys = Object.keys(d);\n    console.log(keys); \n    // console.log(d.keys())\n    \n    \n    data.push(d)\n  } else {\n    console.log(\"same\")\n  }\n}\n\nreturn data;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        624,
+        192
+      ],
+      "id": "052b6475-a4d7-4c65-bb42-2e7c972735d7",
+      "name": "Diff1"
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "http://localhost:5678/api/v1/workflows/spendtracker",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        832,
+        0
+      ],
+      "id": "3935252d-f09e-4bc6-9f7d-5e79f78dec7d",
+      "name": "PatchWF",
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "9iRo7o4wsQzi0IwK",
+          "name": "Custom Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "http://localhost:5678/api/v1/workflows/telegramquery",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        832,
+        192
+      ],
+      "id": "df34d4c5-541b-4c3a-b079-e510082788d8",
+      "name": "PatchWF1",
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "9iRo7o4wsQzi0IwK",
+          "name": "Custom Auth account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "LocalWorkflowSpendTracker",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "LocalWorkflowTelegramQuery",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LocalWorkflowSpendTracker": {
+      "main": [
+        [
+          {
+            "node": "RemoteWorkflowSpendTracker",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RemoteWorkflowSpendTracker": {
+      "main": [
+        [
+          {
+            "node": "Diff",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LocalWorkflowTelegramQuery": {
+      "main": [
+        [
+          {
+            "node": "RemoteWorkflowSpendTracker1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RemoteWorkflowSpendTracker1": {
+      "main": [
+        [
+          {
+            "node": "Diff1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Diff": {
+      "main": [
+        [
+          {
+            "node": "PatchWF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Diff1": {
+      "main": [
+        [
+          {
+            "node": "PatchWF1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "b6d8b8ab-04fc-4bd3-b77f-cb415221401d",
+  "meta": {
+    "instanceId": "f91e94c7277e6c12bb29a8ff2e630a146cb07f7f80eead8880254d1f65556c31"
+  },
+  "id": "syncworkflow",
+  "tags": []
+}

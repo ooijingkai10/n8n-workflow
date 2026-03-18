@@ -52,12 +52,30 @@ cat <<-EOT >credentials.json
     "isResolvable": false,
     "resolvableAllowFallback": false,
     "resolverId": null
+  },
+  {
+    "updatedAt": "2026-03-18T07:31:43.776Z",
+    "createdAt": "2026-03-18T07:31:43.778Z",
+    "id": "9iRo7o4wsQzi0IwK",
+    "name": "Custom Auth account",
+    "data": {
+      "json": "{\n\t\"headers\": {\n\t\t\"X-N8N-API-KEY\": \"${N8N_API_KEY}\"\n\t}\n}"
+    },
+    "type": "httpCustomAuth",
+    "isManaged": false,
+    "isGlobal": false,
+    "isResolvable": false,
+    "resolvableAllowFallback": false,
+    "resolverId": null
   }
+
 ]
 EOT
 
 n8n import:credentials --input credentials.json
 n8n import:workflow --input=/workflows/spendtracker-workflow.json
 n8n import:workflow --input=/workflows/telegramquery.json
+n8n import:workflow --input=/workflows/syncworkflow.json
 n8n publish:workflow --id=spendtracker
 n8n publish:workflow --id=telegramquery
+n8n publish:workflow --id=syncworkflow

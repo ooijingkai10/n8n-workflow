@@ -76,6 +76,7 @@ services:
       - IMAP_USER
       - IMAP_PASSWORD
       - IMAP_HOST
+      - N8N_API_KEY
     volumes:
       - n8n_storage:/home/node/.n8n
       - ./init-data-n8n.sh:/docker-entrypoint.d/init-data-n8n.sh
